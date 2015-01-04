@@ -1,0 +1,9 @@
+<div class="logo"><h1><a href="index.html">Gavin's<span>Blog</span> <small>just a washroom for coder gavin</small></a></h1></div>
+<div class="menu_nav">
+<ul>
+	{% for menu in menus %}
+	<li class="active"><a href="{static_url(menu.link)}">menu.name</a></li>
+	{% end %}
+</ul>
+</div>
+<div class="clr"></div>

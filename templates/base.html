@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{% block title %} Weblcome to Gavin's site {% end %}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<!-- CuFon: Enables smooth pretty custom font rendering. 100% SEO friendly. To disable, remove this section -->
+<script type="text/javascript" src="js/cufon-yui.js"></script>
+<script type="text/javascript" src="js/arial.js"></script>
+<script type="text/javascript" src="js/cuf_run.js"></script>
+<!-- CuFon ends -->
+</head>
+<body>
+<div class="main">
+
+  <div class="header">
+    <div class="header_resize">
+	  {% block header%}
+	    {% module header(menus) %}
+	  {% end %}
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="content_resize">
+      <div class="mainbar">
+	  {% block mainbar %}
+	    {% for artical in articals %}
+		{% module artical(artical) %}
+	  {% end %}
+
+	  {% block page %}
+	    {% module page(page) %}
+	  {% end %}
+      </div>
+      <div class="sidebar">
+		{% block sidebar %}
+		{% module slideSearch %} 
+		{% module slideMenu %} 
+		{% module slideArchive %} 
+		{% end %}
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+
+  <div class="fbg">
+    <div class="fbg_resize">
+	  {% block footer_bg %}
+	    {% module spread %}
+	  {% end %}
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer_resize">
+	  {% block footer %}
+	    {% module footer %}
+	  {% end %}
+    </div>
+  </div>
+</div>
+<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div></body>
+</html>
