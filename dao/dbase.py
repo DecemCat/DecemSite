@@ -1,10 +1,27 @@
 import asyncmongo
+import const
+
+from config import ConfigReader
 
 class BaseDBSupport:
+    def __init__(self):
+        cr = ConfigReader()
+        self._dbname = cr.read(const.SERVER_CONF, const.DBS_SECTION, const.DBNAME)
+        self._dbuser = cr.read(const.SERVER_CONF, const.DBS_SECTION, const.DBUSER)
+        self._dbpass = cr.read(const.SERVER_CONF, const.DBS_SECTION, const.DBPASS)
+
     @property
     def db(self):
         if not hasattr(self, '_db'):
-            self._db = asyncmongo.Client(pool_id='wb4mdb', host='127.0.0.1', port=27017, maxconnections=50, dbname='wb4m')
+            cr = ConfigReader()
+            self._db = asyncmongo.Client(pool_id='wb4m',
+                                         host='127.0.0.1',
+                                         port=27017,
+                                         maxconnections=50,
+                                         dbname=self._dbname,
+                                         dbuser=self._dbuser,
+                                         dbpass=self._dbpass
+                                         )
         return self._db
 
 

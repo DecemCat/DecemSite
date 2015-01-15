@@ -12,9 +12,14 @@ _const.SERVER_CONF = "server.conf"
 _const.HANDLER_SECTION = "handlers"
 _const.SERVER_SECTION = "server"
 _const.UIMODULE_SECTION = "uimodules"
+_const.DBS_SECTION = "db"
 
 _const.SERVER_IP = "ip"
 _const.SERVER_PORT = "port"
+
+_const.DBNAME = "dbname"
+_const.DBUSER = "dbuser"
+_const.DBPASS = "dbpass"
 import sys
 sys.modules[__name__] = _const()
 

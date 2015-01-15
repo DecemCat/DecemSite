@@ -4,6 +4,7 @@ import tornado.ioloop
 import tornado.httpserver
 import tornado.options
 import const
+import importlib
 
 from config import ConfigReader
 
@@ -11,8 +12,15 @@ def convert_arr(handlers):
     last_arr = []
     for handler in handlers:
         hans = handler[1].split(";")
-        last_arr.append((handler[0], getattr(__import__(hans[0]), hans[1])))
+        last_arr.append((handler[0], getattr(importlib.import_module(hans[0]), hans[1])))
     return last_arr
+
+def convert_dict(modules):
+    last_dict = {}
+    for (key,value) in modules.items():
+        hans = value.split(";")
+        last_dict[key] = getattr(importlib.import_module(hans[0]), hans[1])
+    return last_dict
 
 if __name__ == '__main__':
     cr = ConfigReader()
@@ -23,7 +31,7 @@ if __name__ == '__main__':
         handlers=convert_arr(handlers),
         template_path=os.path.join(os.path.dirname(__file__), 'templates'),
         static_path=os.path.join(os.path.dirname(__file__), 'static'),
-        ui_modules=modules
+        ui_modules=convert_dict(modules)
     )
     server = tornado.httpserver.HTTPServer(app)
     server.listen(cr.read(const.SERVER_CONF, const.SERVER_SECTION, const.SERVER_PORT))

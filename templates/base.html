@@ -15,7 +15,7 @@
 
   <div class="header">
     <div class="header_resize">
-	  {% block header%}
+	  {% block header %}
 	    {% module header(menus) %}
 	  {% end %}
     </div>
@@ -25,8 +25,9 @@
     <div class="content_resize">
       <div class="mainbar">
 	  {% block mainbar %}
-	    {% for artical in articals %}
-		{% module artical(artical) %}
+	    {% for article in articles %}
+		    {% module article(article) %}
+        {% end %}
 	  {% end %}
 
 	  {% block page %}
@@ -35,9 +36,9 @@
       </div>
       <div class="sidebar">
 		{% block sidebar %}
-		{% module slideSearch %} 
-		{% module slideMenu %} 
-		{% module slideArchive %} 
+          {% module slidesearch() %}
+          {% module slidemenu() %}
+          {% module slidearchive() %}
 		{% end %}
       </div>
       <div class="clr"></div>
