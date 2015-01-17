@@ -44,7 +44,7 @@ ul.sb_menu li, ul.ex_menu li { margin:0;}
 ul.sb_menu li { padding:4px 0; width:220px;}
 ul.ex_menu li { padding:4px 0;}
 ul.sb_menu li a, ul.ex_menu li a { color:#959595; text-decoration:none; margin-left:-12px; padding-left:12px;}
-ul.sb_menu li a:hover, ul.ex_menu li a:hover { color:#20bac6; font-weight:bold; background:url(images/li_a.gif) no-repeat left center;}
+ul.sb_menu li a:hover, ul.ex_menu li a:hover { color:#20bac6; font-weight:bold; background:url(../images/li_a.gif) no-repeat left center;}
 ul.sb_menu li a:hover { text-decoration:underline;}
 ul.ex_menu li a:hover { text-decoration:none;}
 .content p.pages { padding:0 24px 0 40px; font-size:11px; color:#959595; text-align:right;}
@@ -58,7 +58,7 @@ ul.ex_menu li a:hover { text-decoration:none;}
 .content .mainbar .comment img.userpic { border:1px solid #dedede; margin:10px 16px 0 0; padding:0; float:left;}
 
 /* fbg */
-.fbg { background:url(images/fbg_bg.jpg) repeat-x center bottom;}
+.fbg { background:url(../images/fbg_bg.jpg) repeat-x center bottom;}
 .fbg_resize { margin:0 auto; width:890px; padding:24px 40px 12px;}
 .fbg ul li { padding:4px 0;}
 .fbg a { margin:0; padding:2px 4px;}
@@ -93,6 +93,6 @@ ol li .send { margin:16px 0 0 0;}
 /* search */
 .searchform { float:left;}
 #formsearch { margin:0; height:36px; padding:12px 0 36px 40px;}
-#formsearch span { display:block; margin:6px 0; padding:0; float:left; background:#fff url(images/search.gif) no-repeat top left;}
+#formsearch span { display:block; margin:6px 0; padding:0; float:left; background:#fff url(../images/search.gif) no-repeat top left;}
 #formsearch input.editbox_search { margin:0; padding:11px 6px 10px; float:left; width:181px; border:none; background:none; font:normal 12px/1.5em Arial, Helvetica, sans-serif; color:#a8acb2;}
 #formsearch input.button_search { margin:6px 0 0 0; padding:0; border:none; float:left;}

@@ -3,11 +3,11 @@
 <head>
 <title>{% block title %} Weblcome to Gavin's site {% end %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="style.css" rel="stylesheet" type="text/css" />
+<link href="{{ static_url("css/style.css") }}" rel="stylesheet" type="text/css" />
 <!-- CuFon: Enables smooth pretty custom font rendering. 100% SEO friendly. To disable, remove this section -->
-<script type="text/javascript" src="js/cufon-yui.js"></script>
-<script type="text/javascript" src="js/arial.js"></script>
-<script type="text/javascript" src="js/cuf_run.js"></script>
+<script type="text/javascript" src="{{ static_url("js/cufon-yui.js") }}"></script>
+<script type="text/javascript" src="{{ static_url("js/arial.js") }}"></script>
+<script type="text/javascript" src="{{ static_url("js/cuf_run.js") }}"></script>
 <!-- CuFon ends -->
 </head>
 <body>
@@ -48,14 +48,14 @@
   <div class="fbg">
     <div class="fbg_resize">
 	  {% block footer_bg %}
-	    {% module spread %}
+	    {% module spread() %}
 	  {% end %}
     </div>
   </div>
   <div class="footer">
     <div class="footer_resize">
 	  {% block footer %}
-	    {% module footer %}
+	    {% module footer() %}
 	  {% end %}
     </div>
   </div>

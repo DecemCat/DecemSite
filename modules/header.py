@@ -4,4 +4,4 @@ import tornado.web
 
 class HeaderModule(tornado.web.UIModule):
     def render(self, menus):
-        self.render_string('module/header.html', menus=menus)
+        return self.render_string('module/header.html', menus=menus)

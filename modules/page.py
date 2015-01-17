@@ -4,4 +4,4 @@ import tornado.web
 
 class PageModule(tornado.web.UIModule):
     def render(self, page):
-        self.render_string('module/page.html', page=page)
+        return self.render_string('module/page.html', page=page)

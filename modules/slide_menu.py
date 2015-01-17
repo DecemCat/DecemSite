@@ -4,4 +4,4 @@ import tornado.web
 
 class SlideMenuModule(tornado.web.UIModule):
     def render(self):
-        self.render_string('module/slideMenu.html')
+        return self.render_string('module/slideMenu.html')
