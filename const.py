@@ -20,6 +20,8 @@ _const.SERVER_PORT = "port"
 _const.DBNAME = "dbname"
 _const.DBUSER = "dbuser"
 _const.DBPASS = "dbpass"
+
+_const.PAGE_SIZE = 5
 import sys
 sys.modules[__name__] = _const()
 

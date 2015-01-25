@@ -1,3 +1,29 @@
 {% extends "base.html" %}
+{% block mainbar %}
+<div class="note_font about_content">
+    <h2 style="height: 0px;">Contact US</h2>
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=1>
+    Warmly welcome to contact us.
+    <h2>Email US</h2>
+    <a href="mailto:admin@wb4m.com"><img style="float: right; margin-right: 35px; clear: both;" src="{{ static_url("images/email.gif") }}" width="500px" height="90px"></a>
+    <h2 style="clear: both;">Leave a Message</h2>
+    <form>
+        <table>
+            <tr>
+                <td>Username: </td>
+                <td><input type="text" style="width: 500px; height: 20px;" /></td>
+            </tr>
+            <tr>
+                <td>Email: </td>
+                <td><input type="text" style="width: 500px; height: 20px;" /></td>
+            </tr>
+            <tr>
+                <td>Message: </td>
+                <td><textarea style="width: 420px; height: 80px;"></textarea><img style="height: 85px; cursor: pointer; width: 80px;" src="{{ static_url("images/submit.gif") }}"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% end %}
 {% block page %}
 {% end %}

@@ -1,7 +1,7 @@
 <div class="article">
-	<h2>{{article.title}}</h2><div class="clr"></div>
-	<p><span class="date">Date: <a href="#">{{article.date}}</a></span> &nbsp;|&nbsp; Posted by <a href="#">{{article.author}}</a> &nbsp;|&nbsp; with comments <a href="#" class="com">({{article.comments}})</a></p>
-  <img src="images/img1.jpg" width="625" height="205" alt="image" />
-  <p>{{article.content}}</p>
+	<h2>{{article["title"]}}</h2><div class="clr"></div>
+	<p><span class="date">Date: <a href="#">{{article["create_time"]}}</a></span> &nbsp;|&nbsp; Posted by <a href="#">{{article["author"]}}</a> &nbsp;|&nbsp; with comments <a href="#" class="com">({{article["comments"]}})</a></p>
+  <img src="{{ static_url("images/img1.jpg") }}" width="625" height="205" alt="image" />
+  <p>{{article["content"]}}</p>
   <p class="spec"><a href="#" class="rm">Read more &raquo;</a></p>
 </div>

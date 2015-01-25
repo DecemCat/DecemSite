@@ -6,7 +6,7 @@
 <link href="{{ static_url("css/style.css") }}" rel="stylesheet" type="text/css" />
 <!-- CuFon: Enables smooth pretty custom font rendering. 100% SEO friendly. To disable, remove this section -->
 <script type="text/javascript" src="{{ static_url("js/cufon-yui.js") }}"></script>
-<script type="text/javascript" src="{{ static_url("js/arial.js") }}"></script>
+<script type="text/javascript" src="{{ static_url("js/sentymaruko.js") }}"></script>
 <script type="text/javascript" src="{{ static_url("js/cuf_run.js") }}"></script>
 <!-- CuFon ends -->
 </head>
@@ -16,22 +16,30 @@
   <div class="header">
     <div class="header_resize">
 	  {% block header %}
-	    {% module header(menus) %}
+	    {% module header() %}
 	  {% end %}
     </div>
   </div>
 
   <div class="content">
     <div class="content_resize">
+      {% block content %}
       <div class="mainbar">
 	  {% block mainbar %}
-	    {% for article in articles %}
+          {% if page["totalCount"] == 0 %}
+            <div class="" style="font-size: 20px; color: #c0c0c0; min-height: 400px; line-height: 400px; overflow: hidden; text-align: center;">Nothing to display.</div>
+          {% else %}
+            {% for article in articles %}
 		    {% module article(article) %}
         {% end %}
+
+          {% end %}
 	  {% end %}
 
 	  {% block page %}
-	    {% module page(page) %}
+          {% if page["totalCount"] != 0 %}
+          {% module page(page) %}
+          {% end %}
 	  {% end %}
       </div>
       <div class="sidebar">
@@ -41,6 +49,7 @@
           {% module slidearchive() %}
 		{% end %}
       </div>
+      {% end %}
       <div class="clr"></div>
     </div>
   </div>

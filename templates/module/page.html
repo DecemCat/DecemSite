@@ -1,1 +1,14 @@
-<p class="pages"><small>Page 1 of 2 &nbsp;&nbsp;&nbsp;</small> <span>1</span> <a href="#">2</a> <a href="#">&raquo;</a></p>
+<p class="pages">
+    <small>Page {{ page["currentPage"] }} of {{ page["totalCount"] }} &nbsp;&nbsp;&nbsp;</small>
+    {% for count in range(page["totalCount"]) %}
+        {% if count == page["currentPage"] %}
+            <span>{% raw count+1 %}</span>
+        {% else %}
+            <a href="#">{% raw count+1 %}</a>
+        {% end %}
+
+    {% end %}
+
+
+    <a href="#">&raquo;</a>
+</p>

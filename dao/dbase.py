@@ -1,4 +1,4 @@
-import asyncmongo
+import pymongo
 import const
 
 from config import ConfigReader
@@ -14,22 +14,7 @@ class BaseDBSupport:
     def db(self):
         if not hasattr(self, '_db'):
             cr = ConfigReader()
-            self._db = asyncmongo.Client(pool_id='wb4m',
-                                         host='127.0.0.1',
-                                         port=27017,
-                                         maxconnections=50,
-                                         dbname=self._dbname,
-                                         dbuser=self._dbuser,
-                                         dbpass=self._dbpass
-                                         )
+            conn = pymongo.Connection('127.0.0.1', 27017)
+            self._db = conn[self._dbname]
+            self._db.authenticate(self._dbuser, self._dbpass)
         return self._db
-
-
-    def find(self, table, limit=1, **param):
-        conn = self.db.connection(collectionname=table)
-        conn.find(param, callback=self._on_find)
-
-
-    def _on_find(self, response, error):
-        print(error)
-        print(response)

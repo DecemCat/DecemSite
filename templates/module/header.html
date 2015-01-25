@@ -2,7 +2,7 @@
 <div class="menu_nav">
 <ul>
 	{% for menu in menus %}
-	<li class="active"><a href="{static_url(menu.link)}">menu.name</a></li>
+	<li class="active"><a href="{{ menu["url"] }}">{{ menu["name"] }}</a></li>
 	{% end %}
 </ul>
 </div>

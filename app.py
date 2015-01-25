@@ -11,14 +11,14 @@ from config import ConfigReader
 def convert_arr(handlers):
     last_arr = []
     for handler in handlers:
-        hans = handler[1].split(";")
+        hans = handler[1].split(":")
         last_arr.append((handler[0], getattr(importlib.import_module(hans[0]), hans[1])))
     return last_arr
 
 def convert_dict(modules):
     last_dict = {}
     for (key,value) in modules.items():
-        hans = value.split(";")
+        hans = value.split(":")
         last_dict[key] = getattr(importlib.import_module(hans[0]), hans[1])
     return last_dict
 
