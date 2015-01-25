@@ -1,4 +1,5 @@
 import tornado.web
+import tornado.escape
 import dao.dbase
 import pymongo
 import const
@@ -17,4 +18,9 @@ class BlogHandler(tornado.web.RequestHandler):
         remainder = count % const.PAGE_SIZE
         if remainder != 0:
             total_size = total_size + 1
-        self.render('blog.html', articles=articles, page={"currentPage": page - 1, "totalCount": total_size})
+        self.render('blog.html', articles=articles, page={"currentPage": page - 1, "totalCount": total_size}, index=1)
+
+    def post(self, *args, **kwargs):
+        contents = self.request.body
+        contents = tornado.escape.url_unescape(contents)
+        print(contents)

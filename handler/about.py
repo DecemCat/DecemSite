@@ -3,4 +3,4 @@ import tornado.web
 
 class AboutHandler(tornado.web.RequestHandler):
     def get(self, *args, **kwargs):
-        self.render('about.html', articles=[])
+        self.render('about.html', index=3)
