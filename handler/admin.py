@@ -9,6 +9,13 @@ from utils import EmailUtils
 from utils import RequestHandler
 
 class AdminHandler(tornado.web.RequestHandler):
+    def __init__(self, application, request, **kwargs):
+        tornado.web.RequestHandler.__init__(self,application, request, **kwargs)
+        connection = dao.dbase.BaseDBSupport()
+        self._login = connection.db["login"]
+        self._submenu = connection.db["submenu"]
+
+
     def get(self, *args, **kwargs):
         self.render('login.html')
 
@@ -17,13 +24,14 @@ class AdminHandler(tornado.web.RequestHandler):
         return ''.join([random.choice(chars) for i in range(length)])
 
     def post(self, *args, **kwargs):
-        connection = dao.dbase.BaseDBSupport()
         mac = RequestHandler.get_argument(self, 'u1', None)
+        mac = int(mac)
         username = RequestHandler.get_argument(self, 'u2', None)
         password = RequestHandler.get_argument(self, 'u3', None)
         logout = RequestHandler.get_argument(self, 'logout', 0)
+        logout = int(logout)
         if logout == 1:
-            connection.db["login"].remove({'username': username})
+            self._login.remove({'username': username})
             self.render("login.html")
             return
 
@@ -35,17 +43,18 @@ class AdminHandler(tornado.web.RequestHandler):
             password = self._gen_password(10)
             EmailUtils.send_mail("admin@wb4m.com", "Password for this time", password)
             time = datetime.datetime.now()
-            connection.db["login"].insert({'mac': mac, 'username': username, 'password': password, 'create_time': time})
+            self._login.insert({'mac': mac, 'username': username, 'password': password, 'create_time': time})
             self.render('login.html')
             return
 
 
-        users = connection.db["login"].find({'username': username, 'password': password})
+        users = self._login.find({'username': username, 'password': password})
         if users.count() > 0:
-            cookie = username + datetime.time.strftime()
+            cookie = username + datetime.datetime.now().strftime("%H:%M:%S %Z")
             self.set_secure_cookie('username', cookie)
-            connection.db["login"].update({'_id', users[0]['_id']}, {'cookie': cookie})
-            self.render("manage.html")
+            self._login.update({'_id': users[0]['_id']}, {"$set": {'cookie': cookie}})
+            tags = self._submenu.find()
+            self.render("manage.html", tags=tags)
             return
 
         self.render("login.html")

@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 
 class RequestHandler:
     @staticmethod
-    def get_argument(request, key, default_val):
+    def get_argument(request, key, default_val=None):
         assert isinstance(request, tornado.web.RequestHandler)
         value = default_val
         try:
