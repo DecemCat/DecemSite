@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block headscript %}
+<link href="{{ static_url("ueditor/themes/default/css/ueditor.min.css") }}" rel="stylesheet" type="text/css" />
+<script>
+     function parseDom(arg){
+         var objE = document.createElement("div");
+         objE.innerHTML = arg;
+         return objE.childNodes;
+     }
+
+
+    $(function(){
+{#        alert(elems[0].html());#}
+        var elems = document.getElementsByClassName("article_tag");
+        for(var i = 0; i < elems.length; i++)
+        {
+            text = elems[i].innerText;
+            $(elems[i]).html("");
+            var doms =  parseDom(text);
+            $(doms).appendTo($(elems[i]));
+        }
+    })
+</script>
+{% end %}
+
+{% block content %}
+<div class="article" style="margin-left: 50px;">
+	<h2 style="width: 600px; overflow: hidden;text-overflow: ellipsis;">{{blog["title"]}}</h2><div class="clr"></div>
+	<p><span class="date">Date: <a href="#">{{blog["create_time"]}}</a></span> &nbsp;|&nbsp; Posted by <a href="#">{{blog["author"]}}</a> &nbsp;|&nbsp; with comments <a href="#" class="com">({{blog["comments"]}})</a></p>
+  <div class="article_tag" id="{{ blog["_id"] }}" class="article_tag">{{blog["content"]}}</div>
+</div>
+{% end %}

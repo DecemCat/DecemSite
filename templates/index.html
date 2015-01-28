@@ -6,7 +6,7 @@
         <div class="note_content note_font">
             <h3 style="margin-top: 0px; margin-bottom: 0px;">Blogs</h3><ul>
             {% for blog in blogs %}
-                <li>{{ blog["title"] }}</li>
+                <li style="overflow: hidden; line-height: 8px; max-width: 270px;">{{ blog["title"] }}</li>
                 {% end %}
             </ul>
         </div>
@@ -17,7 +17,7 @@
         <div class="note_content note_font">
             <h3 style="margin-top: 0px;">Lives</h3><ul>
                 {% for life in lives %}
-                <li>{{ life["title"] }}</li>
+                <li style="overflow: hidden; line-height: 8px; max-width: 270px;">{{ life["title"] }}</li>
                 {% end %}
             </ul>
 

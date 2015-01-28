@@ -33,7 +33,7 @@
             <div class="" style="font-size: 20px; color: #c0c0c0; min-height: 400px; line-height: 400px; overflow: hidden; text-align: center;">Nothing to display.</div>
           {% else %}
             {% for article in articles %}
-		    {% module article(article) %}
+		    {% module article(article, index) %}
         {% end %}
 
           {% end %}
@@ -41,7 +41,7 @@
 
 	  {% block page %}
           {% if page["totalCount"] != 0 %}
-          {% module page(page) %}
+          {% module page(page, index) %}
           {% end %}
 	  {% end %}
       </div>

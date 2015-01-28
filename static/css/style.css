@@ -99,10 +99,10 @@ ol li .send { margin:16px 0 0 0;}
 
 /* index */
 .note{width: 342px; height: auto; float: left; margin-left: 100px;}
-.note_content{border: none; background-image: url("../images/note_center.gif"); background-repeat: repeat-y; overflow: hidden; font-size: 20px; width: 342px; min-height: 238px; height: auto; float: left; padding-top: 5px; text-indent: 30px;}
+.note_content{border: none; background-image: url("../images/note_center.gif"); background-repeat: repeat-y; overflow: hidden; font-size: 20px; width: 342px; min-height: 308px; height: auto; float: left; padding-top: 5px; padding-left: 30px;}
 
 /* about */
 .about_content{margin-left: 40px; font-size: 20px;}
 .button, .button:visited {background: #eee url(../images/overlay.png) repeat-x;display: inline-block;padding: 5px 10px 6px; color: gray; text-decoration: none; -moz-border-radius: 6px; -webkit-border-radius: 6px; -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6); -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6); text-shadow: 0 -1px 1px rgba(0,0,0,0.25);  border-bottom: 1px solid rgba(0,0,0,0.25);  position: relative; cursor: pointer; width: 600px; }
 .gadget li {font-size: 20px;}
-
+.article_tag{width: 100%; font-size: 15px; height: auto;}

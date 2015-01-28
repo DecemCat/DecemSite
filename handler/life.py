@@ -11,7 +11,7 @@ class LifeHandler(tornado.web.RequestHandler):
         page = RequestHandler.get_argument(self, 'p', 1)
         type = RequestHandler.get_argument(self, 'type', 1)
         start = (page - 1) * const.PAGE_SIZE
-        articles = connection.db["blog"].find({'type': 1}).sort("create_time", pymongo.ASCENDING).skip(start).limit(const.PAGE_SIZE)
+        articles = connection.db["blog"].find({'type': 1}).sort("create_time", pymongo.DESCENDING).skip(start).limit(const.PAGE_SIZE)
         count = connection.db["blog"].find({'type': 1}).count()
         total_size = count / const.PAGE_SIZE
         remainder = count % const.PAGE_SIZE

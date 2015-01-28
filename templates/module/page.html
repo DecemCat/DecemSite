@@ -1,14 +1,19 @@
 <p class="pages">
-    <small>Page {{ page["currentPage"] }} of {{ page["totalCount"] }} &nbsp;&nbsp;&nbsp;</small>
+    <small>Page {% raw page["currentPage"]+1 %} of {{ page["totalCount"] }} &nbsp;&nbsp;&nbsp;</small>
+    {% if page["currentPage"] !=  0 %}
+        <a href="blog.html?p={% raw page["currentPage"] %}">&laquo;</a>
+    {% end %}
     {% for count in range(page["totalCount"]) %}
         {% if count == page["currentPage"] %}
             <span>{% raw count+1 %}</span>
         {% else %}
-            <a href="#">{% raw count+1 %}</a>
+            <a href="{{ link }}?p={% raw count+1 %}">{% raw count+1 %}</a>
         {% end %}
 
     {% end %}
+{#TODO if page greater than 10 the page show. #}
+    {% if page["currentPage"]+1 !=  page["totalCount"] %}
+        <a href="{{ link }}?p={% raw page["currentPage"]+2 %}">&raquo;</a>
+    {% end %}
 
-
-    <a href="#">&raquo;</a>
 </p>

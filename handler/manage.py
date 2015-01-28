@@ -33,6 +33,7 @@ class PostHandler(tornado.web.RequestHandler):
         title = RequestHandler.get_argument(self, 'title')
         content = RequestHandler.get_argument(self, 'content')
         content = content[1:len(content)-1]
+        content = content.replace('\\\"', '"')
         type = RequestHandler.get_argument(self, 'type')
         typei = int(type)
         tags = RequestHandler.get_argument(self, 'tags')
