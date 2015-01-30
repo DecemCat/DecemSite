@@ -105,4 +105,14 @@ ol li .send { margin:16px 0 0 0;}
 .about_content{margin-left: 40px; font-size: 20px;}
 .button, .button:visited {background: #eee url(../images/overlay.png) repeat-x;display: inline-block;padding: 5px 10px 6px; color: gray; text-decoration: none; -moz-border-radius: 6px; -webkit-border-radius: 6px; -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6); -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6); text-shadow: 0 -1px 1px rgba(0,0,0,0.25);  border-bottom: 1px solid rgba(0,0,0,0.25);  position: relative; cursor: pointer; width: 600px; }
 .gadget li {font-size: 20px;}
-.article_tag{width: 100%; font-size: 15px; height: auto;}
+.article_tag{width: 100%; font-size: 15px; height: auto; font-family: '微软雅黑';}
+.post_bright{border: 1px solid #E5E5E5; border-bottom: 1px solid #E1E4E6; background: #fafbfc; width: 920px; margin-left: 50px; padding: 0px; font-family: '微软雅黑'; min-height: 150px; height: 100%;}
+.d_post_content_main{float:left;width:750px;padding:0 0 7px 20px}
+.p_content{position:relative;height:auto!important;min-height:145px;height:145px;padding:24px 20px 0 0}
+.p_content_nameplate{height:auto!important;min-height:100px;height:100px}
+.d_post_content{line-height:24px;font-size:14px;word-wrap:break-word}
+.core_reply{margin-right:13px; float: right;}
+.core_reply_tail{position:relative;line-height:28px;height:28px;margin-top:30px}
+.p_reply{float:right;margin-left:6px}
+.lzl_link_fold{background:url(http://tb2.bdstatic.com/tb/static-ppb/img/pb_css_pic_a630a08.png) no-repeat -256px -120px;color:#1D53BF;cursor:pointer;display:inline-block;height:28px;line-height:28px;text-align:center;width:80px}
+.d_author,.d_author_anonym{width:130px;float:left;text-align:center;padding:15px 0}
