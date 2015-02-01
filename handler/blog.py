@@ -4,7 +4,11 @@ import dao.dbase
 import pymongo
 import const
 import bson.errors
+import utils
+import threading
+import datetime
 
+comment_lock = threading.RLock()
 from utils import RequestHandler
 from bson import ObjectId
 class BlogHandler(tornado.web.RequestHandler):
@@ -32,6 +36,7 @@ class BlogDetailHandler(tornado.web.RequestHandler):
         tornado.web.RequestHandler.__init__(self, application, request, **kwargs)
         connection = dao.dbase.BaseDBSupport()
         self._blog = connection.db["blog"]
+        self._posts = connection.db["posts"]
 
     def get(self, blog_id):
         try:
@@ -42,4 +47,34 @@ class BlogDetailHandler(tornado.web.RequestHandler):
         blogs = self._blog.find({'_id': ObjectId(blog_id)})
         if blogs.count() == 0:
             raise tornado.web.HTTPError(404)
-        self.render('blog_detail.html', blog=blogs[0], index=1)
+        posts = self._posts.find({"article_id": blog_id})
+        print(blogs[0])
+        self.render('blog_detail.html', blog=blogs[0], index=1, posts=posts)
+
+    def post(self, blog_id):
+        author = utils.RequestHandler.get_argument(self, "author")
+        email = utils.RequestHandler.get_argument(self, "email")
+        content = utils.RequestHandler.get_argument(self, "content")
+
+        _id = None
+        try:
+            _id = ObjectId(blog_id)
+        except:
+            raise tornado.web.HTTPError(400)
+
+        comment_lock.acquire()
+        blogs = self._blog.find({"_id": _id})
+        if blogs is None or blogs.count() == 0:
+            comment_lock.release()
+            raise tornado.web.HTTPError(400)
+
+        comments = blogs[0]['comments']
+        comments += 1
+        self._blog.update({"_id": blogs[0]["_id"]}, {'$set': {"comments": comments}})
+        comment_lock.release()
+
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+
+        self._posts.insert({"article_id": blog_id, "author": author, "email": email, "content": content, "floor": comments, "post_time": current_date})
+
+
