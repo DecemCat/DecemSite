@@ -48,7 +48,6 @@ class BlogDetailHandler(tornado.web.RequestHandler):
         if blogs.count() == 0:
             raise tornado.web.HTTPError(404)
         posts = self._posts.find({"article_id": blog_id})
-        print(blogs[0])
         self.render('blog_detail.html', blog=blogs[0], index=1, posts=posts)
 
     def post(self, blog_id):
