@@ -9,6 +9,7 @@ import importlib
 
 from config import ConfigReader
 
+
 def convert_arr(handlers):
     last_arr = []
     for handler in handlers:
@@ -16,12 +17,14 @@ def convert_arr(handlers):
         last_arr.append((handler[0], getattr(importlib.import_module(hans[0]), hans[1])))
     return last_arr
 
+
 def convert_dict(modules):
     last_dict = {}
-    for (key,value) in modules.items():
+    for (key, value) in modules.items():
         hans = value.split(":")
         last_dict[key] = getattr(importlib.import_module(hans[0]), hans[1])
     return last_dict
+
 
 if __name__ == '__main__':
     cr = ConfigReader()

@@ -1,7 +1,11 @@
-import os.path
 import ConfigParser
+import os.path
+
 
 class ConfigReader:
+    def __init__(self):
+        pass
+
     def setfile(self, cfgfile):
         self.configParser = ConfigParser.ConfigParser()
         self.configParser.read(os.path.join(os.path.dirname(__file__), "config", cfgfile))

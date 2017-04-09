@@ -8,19 +8,19 @@ import random
 from utils import EmailUtils
 from utils import RequestHandler
 
+
 class AdminHandler(tornado.web.RequestHandler):
     def __init__(self, application, request, **kwargs):
-        tornado.web.RequestHandler.__init__(self,application, request, **kwargs)
+        tornado.web.RequestHandler.__init__(self, application, request, **kwargs)
         connection = dao.dbase.BaseDBSupport()
         self._login = connection.db["login"]
         self._submenu = connection.db["submenu"]
-
 
     def get(self, *args, **kwargs):
         self.render('login.html')
 
     def _gen_password(self, length):
-        chars=string.ascii_letters+string.digits
+        chars = string.ascii_letters + string.digits
         return ''.join([random.choice(chars) for i in range(length)])
 
     def post(self, *args, **kwargs):
@@ -47,7 +47,6 @@ class AdminHandler(tornado.web.RequestHandler):
             self.render('login.html')
             return
 
-
         users = self._login.find({'username': username, 'password': password})
         if users.count() > 0:
             cookie = username + datetime.datetime.now().strftime("%H:%M:%S %Z")
@@ -58,4 +57,3 @@ class AdminHandler(tornado.web.RequestHandler):
             return
 
         self.render("login.html")
-

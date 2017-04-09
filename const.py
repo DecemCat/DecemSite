@@ -1,9 +1,11 @@
 class _const:
-	class ConstError(TypeError): pass
-	def __setattr__(self, name, value):
-		if self.__dict__.has_key(name):
-			raise self.ConstError, "Can't rebind const (%s)" % name
-		self.__dict__[name] = value
+    class ConstError(TypeError): pass
+
+    def __setattr__(self, name, value):
+        if self.__dict__.has_key(name):
+            raise self.ConstError, "Can't rebind const (%s)" % name
+        self.__dict__[name] = value
+
 
 _const.HANDLER_CONF = "handler.conf"
 _const.MODULE_CONF = "module.conf"
@@ -17,11 +19,13 @@ _const.DBS_SECTION = "db"
 _const.SERVER_IP = "ip"
 _const.SERVER_PORT = "port"
 
+_const.DBIP = "dbip"
+_const.DBPORT = "dbport"
 _const.DBNAME = "dbname"
 _const.DBUSER = "dbuser"
 _const.DBPASS = "dbpass"
 
 _const.PAGE_SIZE = 5
 import sys
-sys.modules[__name__] = _const()
 
+sys.modules[__name__] = _const()
