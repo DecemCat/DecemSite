@@ -9,4 +9,4 @@ class HeaderModule(tornado.web.UIModule, dao.dbase.BaseDBSupport):
 
     def render(self, index):
         menus = self.db['menu'].find()
-        return self.render_string('module/header.html', menus=menus, index=index)
+        return self.render_string('module/nav.html', menus=menus, index=index)
