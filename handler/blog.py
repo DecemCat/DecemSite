@@ -29,7 +29,7 @@ class BlogHandler(tornado.web.RequestHandler):
         remainder = count % const.PAGE_SIZE
         if remainder != 0:
             total_size = total_size + 1
-        self.render('blog.html', articles=articles, page={"currentPage": page-1, "totalCount": total_size}, index=1)
+        self.render('post.html', articles=articles, page={"currentPage": page-1, "totalCount": total_size}, index=1)
 
 class BlogDetailHandler(tornado.web.RequestHandler):
     def __init__(self, application, request, **kwargs):
