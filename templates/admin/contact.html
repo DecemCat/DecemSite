@@ -1,0 +1,21 @@
+{% extends base.html %}
+{% block head %}
+<script type="text/javascript" charset="utf-8" src="{{ static_url("ueditor/ueditor.config.js") }}"></script>
+<script type="text/javascript" charset="utf-8" src="{{ static_url("ueditor/ueditor.all.min.js") }}"></script>
+<script type="text/javascript" charset="utf-8" src="{{ static_url("ueditor/lang/zh-cn/zh-cn.js") }}"></script>
+{% end %}
+{% block content %}
+<script id="editor" type="text/plain" name="content" style="min-height: 400px; padding-bottom: 20px"></script>
+<script type="text/javascript">
+    var ue = UE.getEditor("editor")
+</script>
+{% end %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="{{ static_url("admin/bootstrap/js/bootstrap.min.js") }}"></script>
+<script src="{{ static_url("admin/js/custom.js") }}"></script>
+<script src="{{ static_url("admin/js/stats.js") }}"></script>
+{% end %}
+
