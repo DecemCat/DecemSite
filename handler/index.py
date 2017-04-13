@@ -10,8 +10,7 @@ class IndexHandler(tornado.web.RequestHandler):
         self._blog = connection.db["blog"]
     @tornado.web.asynchronous
     def get(self):
-        articles = self._blog.find({'index',1}).sort('lastUpdated',
-                pymongo.DESCENDING)
+        articles = self._blog.find({'index':1}).sort('lastUpdated', pymongo.DESCENDING)
         if articles is None:
             articles = {}
         self.render('index.html', articles=articles)
