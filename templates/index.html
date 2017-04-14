@@ -31,6 +31,16 @@
     .post-block .post-info{color:#7f8c8d; margin: 1.2em 0;}
     .post-block .post-info a.post-tag-link{margin-left: 0.5rem; padding: 3px 6px; border-radius:5px; font-size:12px; color:white; background-color:#e36b6b; text-decoration: none;}
     .home.post-list .read-more{color: #42b983;}
+    .panel{border: 1px solid transparent; border-radius: 4px; -webkit-box-shadow: 0 0 5px #c2c2c2; -moz-box-shadow:0 0 5px #c2c2c2; box-shadow: 0 0 5px #c2c2c2;}
+    .panel-heading{font-size:14px; color:#666; border-bottom:1px solid #eaeaea; background-color:#fbfbfb; margin:0; padding: 10px 15px;}
+    li.list-group-item{min-height:42px;}
+    .panel-post-title{width:280px; overflow:hidden; text-overflow:ellipsis; white-space: nowrap; float:left;}
+    .d_tags{padding: 12px 10px 15px 10px;}
+    .d_tags a{color: #fff; display: inline-block; line-height: 21px; margin: 0 5px 5px 7px; opacity:0.8; padding:2px 6px; width:45%; text-decoration:none; border-radius:3px;}
+    .d_tags a:nth-child(3n){background-color:#337ab7;}
+    .d_tags a:nth-child(3n+1){background-color:#567e95;}
+    .d_tags a:nth-child(3n+2){background-color:#6a6a6a;}
+    .d_tags a:hover{opacity: 1;}
     </style>
 
 </head>
@@ -107,9 +117,10 @@
             <!-- Blog Sidebar Widgets Column -->
             <div class="col-md-4">
 
-                <!-- Blog Search Well -->
-                <div class="well">
-                    <h4>Blog Search</h4>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-search"</span> 搜索本站
+                    </div>
                     <div class="input-group">
                         <input type="text" class="form-control">
                         <span class="input-group-btn">
@@ -118,47 +129,47 @@
                         </button>
                         </span>
                     </div>
-                    <!-- /.input-group -->
                 </div>
 
-                <!-- Blog Categories Well -->
-                <div class="well">
-                    <h4>Blog Categories</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.col-lg-6 -->
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.col-lg-6 -->
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-leaf"></span> 最新文章
                     </div>
-                    <!-- /.row -->
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                        <div class="panel-post-title">
+                            <a href="#" title="Bootstrap test title">Bootstrap test title</a>
+                        </div>
+                        <span class="badge">772</span>
+                        </li>
+
+                        <li class="list-group-item">
+                        <div class="panel-post-title">
+                            <a href="#" title="Bootstrap test title">Bootstrap test title</a>
+                        </div>
+                        <span class="badge">772</span>
+                        </li>
+
+                        <li class="list-group-item">
+                        <div class="panel-post-title">
+                            <a href="#" title="Bootstrap test title">Bootstrap test title</a>
+                        </div>
+                        <span class="badge">772</span>
+                        </li>
+                    </ul>
                 </div>
 
-                <!-- Side Widget Well -->
-                <div class="well">
-                    <h4>Side Widget Well</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-tags"></span> 标签分类
+                    </div>
+                    <div class="d_tags">
+                        <a href="#">Bootstrap (8)</a>
+                        <a href="#">Bootstrap (8)</a>
+                        <a href="#">Bootstrap (8)</a>
+                        <a href="#">Bootstrap (8)</a>
+                    </div>
                 </div>
 
             </div>
@@ -170,13 +181,11 @@
 
         <!-- Footer -->
         <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+            <div class="container">
+                <div class="copy text-center">
+                    Copyright 2017 <a href="#">0x12345.com</a>, All Copyright Reserved.
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
         </footer>
 
     </div>
