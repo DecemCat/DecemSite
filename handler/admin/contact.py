@@ -6,4 +6,4 @@ class ContactManageHandler(tornado.web.RequestHandler):
         super(ContactManageHandler, self).__init__(application, request, **kwargs)
 
     def get(self, *args, **kwargs):
-        self.render("admin/contact.html")
+        self.render("admin/edit.html")

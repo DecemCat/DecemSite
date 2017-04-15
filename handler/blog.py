@@ -1,16 +1,18 @@
-import tornado.web
-import tornado.escape
-import dao.dbase
-import pymongo
-import const
-import bson.errors
-import utils
-import threading
 import datetime
+import threading
+
+import bson.errors
+import pymongo
+import tornado.escape
+import tornado.web
+
+import const
+import dao.dbase
 
 comment_lock = threading.RLock()
-from utils import RequestHandler
 from bson import ObjectId
+
+
 class BlogHandler(tornado.web.RequestHandler):
     def __init__(self, application, request, **kwargs):
         tornado.web.RequestHandler.__init__(self, application, request, **kwargs)
@@ -18,18 +20,20 @@ class BlogHandler(tornado.web.RequestHandler):
         self._blog = connection.db["blog"]
 
     def get(self, *args, **kwargs):
-        page = RequestHandler.get_argument(self, 'p', 1)
-        type = RequestHandler.get_argument(self, 'type', 0)
+        page = self.get_argument(self, 'p', 1)
+        type = self.get_argument(self, 'type', 0)
         page = int(page)
 
         start = (page - 1) * const.PAGE_SIZE
-        articles = self._blog.find({'type': 0}).sort("create_time", pymongo.DESCENDING).skip(start).limit(const.PAGE_SIZE)
+        articles = self._blog.find({'type': 0}).sort("create_time", pymongo.DESCENDING).skip(start).limit(
+            const.PAGE_SIZE)
         count = self._blog.find({'type': 0}).count()
         total_size = count / const.PAGE_SIZE
         remainder = count % const.PAGE_SIZE
         if remainder != 0:
             total_size = total_size + 1
-        self.render('post.html', articles=articles, page={"currentPage": page-1, "totalCount": total_size}, index=1)
+        self.render('post.html', articles=articles, page={"currentPage": page - 1, "totalCount": total_size}, index=1)
+
 
 class BlogDetailHandler(tornado.web.RequestHandler):
     def __init__(self, application, request, **kwargs):
@@ -51,9 +55,9 @@ class BlogDetailHandler(tornado.web.RequestHandler):
         self.render('blog_detail.html', blog=blogs[0], index=1, posts=posts)
 
     def post(self, blog_id):
-        author = utils.RequestHandler.get_argument(self, "author")
-        email = utils.RequestHandler.get_argument(self, "email")
-        content = utils.RequestHandler.get_argument(self, "content")
+        author = self.get_argument(self, "author")
+        email = self.get_argument(self, "email")
+        content = self.get_argument(self, "content")
 
         _id = None
         try:
@@ -74,6 +78,6 @@ class BlogDetailHandler(tornado.web.RequestHandler):
 
         current_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
-        self._posts.insert({"article_id": blog_id, "author": author, "email": email, "content": content, "floor": comments, "post_time": current_date})
-
-
+        self._posts.insert(
+            {"article_id": blog_id, "author": author, "email": email, "content": content, "floor": comments,
+             "post_time": current_date})
