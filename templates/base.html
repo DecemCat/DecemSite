@@ -83,6 +83,7 @@
 
     <div class="row">
 
+        {% block mainbody %}
         <!-- Blog Entries Column -->
         <div class="col-md-8">
             {% block content %}
@@ -96,6 +97,7 @@
             {% module commend() %}
             {% module tags() %}
         </div>
+        {% end %}
 
     </div>
     <!-- /.row -->

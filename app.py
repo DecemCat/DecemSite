@@ -37,8 +37,9 @@ if __name__ == '__main__':
         template_path=os.path.join(os.path.dirname(__file__), 'templates'),
         static_path=os.path.join(os.path.dirname(__file__), 'static'),
         ui_modules=convert_dict(modules),
-        cookie_secret=os.urandom(10)
+        cookie_secret=os.urandom(10),
+        login_url="/login.html"
     )
-    server = tornado.httpserver.HTTPServer(app)
+    server = tornado.httpserver.HTTPServer(app, xheaders=True)
     server.listen(cr.read(const.SERVER_CONF, const.SERVER_SECTION, const.SERVER_PORT))
     tornado.ioloop.IOLoop.instance().start()

@@ -25,6 +25,9 @@ _const.DBNAME = "dbname"
 _const.DBUSER = "dbuser"
 _const.DBPASS = "dbpass"
 
+
+_const.INIT_STATIC = {"title":"", "content": "", "time": ""}
+
 _const.PAGE_SIZE = 5
 import sys
 

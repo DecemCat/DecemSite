@@ -1,0 +1,24 @@
+{% extends base.html %}
+
+{% block head %}
+<style type="text/css">
+    .media>a{text-decoration: none; color: #999;}
+    .media .pull-left .iconfont{font-size: 65px;}
+</style>
+{% end %}
+
+{% block mainbody %}
+<div class="col-md-12">
+    <!-- Title -->
+    <h1>{{ static["title"] }}</h1>
+
+    <hr>
+    <!-- Date/Time -->
+    <p><span class="glyphicon glyphicon-time"></span> Published on {{ static["time"] }}</p>
+
+    <hr>
+
+    {% raw static["content"] %}
+</div>
+
+{% end %}

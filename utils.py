@@ -1,19 +1,7 @@
 __author__ = 'Administrator'
-import tornado.web
 import smtplib
 from email.mime.text import MIMEText
 
-
-class RequestHandler:
-    @staticmethod
-    def get_argument(request, key, default_val=None):
-        assert isinstance(request, tornado.web.RequestHandler)
-        value = default_val
-        try:
-            value = request.get_argument(key)
-        except tornado.web.MissingArgumentError:
-            value = default_val
-        return value
 
 mailto_list = ["admin@wb4m.com"]
 mail_host = "smtp.ym.163.com"

@@ -11,7 +11,7 @@
 {% block content %}
 <div class="content-box-large">
     <div class="panel-heading">
-        <div class="panel-title">Edit Post</div>
+        <div class="panel-title">Edit {{ static["type"] }}</div>
 
         <div class="panel-options">
         </div>
@@ -21,20 +21,7 @@
             <div class="form-group">
                 <label class="col-sm-1 control-label">Title</label>
                 <div class="col-sm-11">
-                    <input type="text" class="form-control" placeholder="Enter Post Title">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-1 control-label">Tags</label>
-                <div class="col-sm-11">
-                    <div id="article-tags"></div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-1 control-label">Introduce</label>
-                <div class="col-sm-11">
-                    <textarea class="form-control" placeholder="Enter Post Introduce" rows="3"></textarea>
+                    <input type="text" class="form-control" name="title"  value="{{ static["title"] }}" placeholder="Enter Post Title">
                 </div>
             </div>
 
@@ -42,15 +29,12 @@
                 <label class="col-sm-1 control-label">Text</label>
                 <div class="col-sm-11">
                     <script id="editor" type="text/plain" name="content" style="min-height: 400px; padding-bottom: 20px"></script>
-                    <script type="text/javascript">
-                    var ue = UE.getEditor("editor")
-                    </script>
                 </div>
             </div>
 
             <div class="form-group bootstrap-tags bootstrap-3">
                 <div class="col-sm-offset-1 col-sm-11">
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-primary" onclick="submit_static()">Submit</button>
                 </div>
             </div>
         </form>
@@ -63,16 +47,30 @@
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="{{ static_url("admin/vendors/select/bootstrap-select.min.js") }}"></script>
-<script src="{{ static_url("admin/vendors/tags/js/bootstrap-tags.min.js") }}"></script>
 <script src="{{ static_url("admin/js/custom.js") }}"></script>
 <script type="text/javascript">
-    var tags;
-    $(function () {
-        $("#article-tags").tags({
-            tagData: {% raw tags %},
-            suggestions:{% raw taglist %}
+    var ue = UE.getEditor("editor");
+    ue.ready(function () {
+        ue.setContent("{% raw static["content"] %}");
+    });
+
+    function submit_static()
+    {
+        var title = $("input[name='title']").val();
+        content = ue.getContent();
+        {% if static["type"] == "about" %}
+            var requrl = "about.html";
+        {% else %}
+            var requrl = "life.html";
+        {% end %}
+
+        $.post(requrl, {"title": title, "content": content}, function (body) {
+            if (body.status == "ok")
+            {
+                window.location.href=body.redirect;
+            }
         });
-    })
+    }
 </script>
 {% end %}
 
