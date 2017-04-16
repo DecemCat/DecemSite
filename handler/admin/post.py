@@ -5,10 +5,11 @@ import dao.dbase
 import base
 
 
-class NewBlogHandler(tornado.web.RequestHandler):
+class NewBlogHandler(base.BaseHandler):
     def __init__(self, application, request, **kwargs):
         super(NewBlogHandler, self).__init__(application, request, **kwargs)
 
+    @tornado.web.authenticated
     def get(self, *args, **kwargs):
         self.render("admin/edit.html", tags=["Java", "C++"], taglist=["aaaa", "Python"])
 
