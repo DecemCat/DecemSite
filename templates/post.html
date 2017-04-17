@@ -14,7 +14,7 @@
 <div class="post-info">
     <div class="post-time">
         <span class="glyphicon glyphicon-time"></span>
-        <a href="#">{{ post["author"] }}</a> Posted on {{ post["time"] }}
+        <a href="#">{{ post["author"] }}</a> Posted on {{ locale.format_date(post["time"], shorter=True) }}
         {% for tag in post["tags"] %}
         <a class="post-tag-link" href="/tag/{{tag}}.html">{{ tag }}</a>
         {% end %}
