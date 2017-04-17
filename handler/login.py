@@ -19,16 +19,19 @@ class LoginHandler(tornado.web.RequestHandler):
         passwds = self.get_body_arguments("passwd")
         if not emails or not passwds:
             self.render("admin/login.html")
+            return
 
         email = emails[0]
         passwd = passwds[0]
         user = self._user.find_one({"email": email})
         if not user:
             self.render("admin/login.html")
+            return
 
         db_passwd = user["passwd"]
         if passwd != db_passwd:
             self.render("admin/login.html")
+            return
 
         self.set_secure_cookie("user", email)
         ran = ''.join([random.choice(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']) for i in range(16)])

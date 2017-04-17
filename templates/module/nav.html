@@ -1,31 +1,44 @@
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><span class="note_font">Gavin's Blog</span></a>
+        <div class="col-md-8 col-sm-12">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/index.html"><span class="note_font">Gavin's Blog</span></a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                    <a href="/index.html">主页</a>
+                    </li>
+                    <li>
+                    <a href="/life.html">生活</a>
+                    </li>
+                    <li>
+                    <a href="/about.html">关于我</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="index.html">主页</a>
-                </li>
-                <li>
-                    <a href="life.html">生活</a>
-                </li>
-                <li>
-                    <a href="about.html">关于我</a>
-                </li>
-            </ul>
+    </div>
+
+    <div class="col-md-4 hidden-xs hidden-sm" style="margin-top:8px; padding-left:20px;">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="请输入要搜索的关键字">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
         </div>
-        <!-- /.navbar-collapse -->
     </div>
     <!-- /.container -->
 </nav>

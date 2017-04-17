@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label class="col-sm-1 control-label">Title</label>
                 <div class="col-sm-11">
-                    <input type="text" class="form-control" placeholder="Enter Post Title">
+                    <input type="text" name="title" value="{{ post["title"] }}" class="form-control" placeholder="Enter Post Title">
                 </div>
             </div>
             <div class="form-group">
@@ -34,7 +34,9 @@
             <div class="form-group">
                 <label class="col-sm-1 control-label">Introduce</label>
                 <div class="col-sm-11">
-                    <textarea class="form-control" placeholder="Enter Post Introduce" rows="3"></textarea>
+                    <textarea class="form-control" id="brief" placeholder="Enter Post Introduce" rows="3">
+                        {{ post["brief"] }}
+                    </textarea>
                 </div>
             </div>
 
@@ -44,13 +46,16 @@
                     <script id="editor" type="text/plain" name="content" style="min-height: 400px; padding-bottom: 20px"></script>
                     <script type="text/javascript">
                     var ue = UE.getEditor("editor")
+                    ue.ready(function(){
+                            ue.setContent("{% raw post["content"] %}");
+                            });
                     </script>
                 </div>
             </div>
 
             <div class="form-group bootstrap-tags bootstrap-3">
                 <div class="col-sm-offset-1 col-sm-11">
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-primary" onclick="editSubmit()">Submit</button>
                 </div>
             </div>
         </form>
@@ -66,13 +71,29 @@
 <script src="{{ static_url("admin/vendors/tags/js/bootstrap-tags.min.js") }}"></script>
 <script src="{{ static_url("admin/js/custom.js") }}"></script>
 <script type="text/javascript">
-    var tags;
+var tags = {% raw post["tags"] %};
     $(function () {
         $("#article-tags").tags({
             tagData: {% raw tags %},
-            suggestions:{% raw taglist %}
+            suggestions:{% raw taglist %},
+            afterAddingTag: function(){
+                tags.push(tag);
+            },
+            afterDeletingTag: function(){
+                tags.splice($.inArray(tag, tags), 1);
+            }
         });
     })
+
+function editSubmit()
+{
+    var title = $("input[name='title']").val();
+    var brief = $("#brief").val();
+    var content = ue.getContent();
+    $.post("{{ dealurl }}", {"title": title, "brief": brief, "content": content, "tags":JSON.stringify(tags)}, function(data){
+            alert(data);
+            });
+}
 </script>
 {% end %}
 

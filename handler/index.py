@@ -7,10 +7,10 @@ class IndexHandler(tornado.web.RequestHandler):
         tornado.web.RequestHandler.__init__(self, application, request,
                 **kwargs)
         connection = dao.dbase.BaseDBSupport()
-        self._blog = connection.db["blog"]
+        self._blog = connection.db["posts"]
     @tornado.web.asynchronous
     def get(self):
-        articles = self._blog.find({'index':1}).sort('lastUpdated', pymongo.DESCENDING)
-        if articles is None:
-            articles = {}
-        self.render('index.html', articles=articles)
+        posts = self._blog.find({}).sort('time', pymongo.DESCENDING)
+        if posts is None:
+            posts = {}
+        self.render('index.html', posts=posts)

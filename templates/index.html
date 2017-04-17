@@ -2,19 +2,25 @@
 
 {% block content %}
 <ul class="home post-list">
+    {% for post in posts %}
     <li class="post-list-item">
         <article class="post-block">
-            <h2 class="post-title"><a href="#" class="post-title-link">Blog Test Template</a></h2>
+            <h2 class="post-title"><a href="/post/{{ post["_id"] }}.html" class="post-title-link">{{ post["title"] }}</a></h2>
             <div class="post-info">
-                <div class="post-time">Jan 13, 2016<a class="post-tag-link" href="#">Java</a></div>
+                <div class="post-time">{{ post["time"] }}
+                    {% for tag in post["tags"] %}
+                    <a class="post-tag-link" href="/tag/{{ tag }}.html">{{ tag }}</a>
+                    {% end %}
+                </div>
             </div>
             <div class="post-content">
-                <p>This is a test blog template.This is a test blog template.This is a test blog template.This is a test blog template.This is a test blog template.This is a test blog template.This is a test blog template.This is a test blog template.This is a test blog template.</p>
+                {{ post["content"] }}
             </div>
 
-            <a href="#" class="read-more">查看全文...</a>
+            <a href="/post/{{ post["_id"] }}.html" class="read-more">查看全文...</a>
         </article>
     </li>
+    {% end %}
 </ul>
 
 <!-- Pager -->
