@@ -1,6 +1,7 @@
 import pymongo
 import tornado.web
 import datetime
+import json
 
 import dao.dbase
 import base
@@ -25,13 +26,11 @@ class NewBlogHandler(base.BaseHandler):
 
     @tornado.web.authenticated
     def post(self, *args, **kwargs):
-        title = self.get_body_argument("title")
-        tags = self.get_body_argument("tags")
-        content = self.get_body_argument("content")
-        brief = self.get_body_argument("brief")
-        author = "Gavin"
-        time = datetime.datetime.now()
-        result = self._posts.insert_one({"title": title, "brief": brief, "content": content, "author": author, "tags": tags, "time": time})
+        body = self.request.body
+        data = json.loads(body)
+        data["author"] = "Gavin"
+        data["time"] = datetime.datetime.now()
+        result = self._posts.insert_one(data)
         self.finish({"status": "ok", "redirect": ""})
 
 

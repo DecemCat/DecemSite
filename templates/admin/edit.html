@@ -74,12 +74,12 @@
 var tags = {% raw post["tags"] %};
     $(function () {
         $("#article-tags").tags({
-            tagData: {% raw tags %},
+            tagData: {% raw post["tags"] %},
             suggestions:{% raw taglist %},
-            afterAddingTag: function(){
+            afterAddingTag: function(tag){
                 tags.push(tag);
             },
-            afterDeletingTag: function(){
+            afterDeletingTag: function(tag){
                 tags.splice($.inArray(tag, tags), 1);
             }
         });
@@ -90,9 +90,20 @@ function editSubmit()
     var title = $("input[name='title']").val();
     var brief = $("#brief").val();
     var content = ue.getContent();
-    $.post("{{ dealurl }}", {"title": title, "brief": brief, "content": content, "tags":JSON.stringify(tags)}, function(data){
-            alert(data);
-            });
+
+    var sendData = {
+        title:title,
+        brief: brief,
+        content: content,
+        tags: tags
+    };
+
+    $.post("{{ dealurl }}", JSON.stringify(sendData), function(data){
+        if(data.status == "ok")
+        {
+            window.location.href = data.redirect;
+        }
+    });
 }
 </script>
 {% end %}
