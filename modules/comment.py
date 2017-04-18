@@ -7,4 +7,4 @@ class CommentModule(tornado.web.UIModule):
         super(CommentModule, self).__init__(handler)
 
     def render(self, article_id):
-        return self.render_string('module/comment.html')
+        return self.render_string('module/comment.html', comments=None)

@@ -4,6 +4,18 @@
 <div class="well">
     <h4>Leave a Comment:</h4>
     <form role="form">
+        <div class="input-group" style="margin-bottom: 5px;">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-user"></i>
+            </span>
+            <input class="form-control" type="text" placeholder="请输入用户名">
+        </div>
+        <div class="input-group" style="margin-bottom: 5px;">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-envelope"></i>
+            </span>
+            <input class="form-control" type="text" placeholder="请输入邮箱">
+        </div>
         <div class="form-group">
             <textarea class="form-control" rows="3"></textarea>
         </div>
@@ -16,42 +28,80 @@
 <!-- Posted Comments -->
 
 <!-- Comment -->
+{% if comments is not None%}
+{% for comment in comments %}
 <div class="media">
     <a class="pull-left" href="#">
-        <i class="iconfont icon-head"></i>
-    </a>
-    <div class="media-body">
-        <h4 class="media-heading">Start Bootstrap
-            <small>August 25, 2014 at 9:30 PM</small>
-        </h4>
-        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-        <a href="#" class="read-more" style="word-break: keep-all;">回复</a>
-    </div>
-</div>
-
-<!-- Comment -->
-<div class="media">
-    <a class="pull-left" href="#">
+        {% if comment["isAuthor"] == "1" %}
         <img class="media-object" src="{{ static_url("images/head.png") }}" alt="">
+        {% else %}
+        <i class="iconfont icon-head"></i>
+        {% end %}
     </a>
-    <div class="media-body">
-        <h4 class="media-heading">Start Bootstrap
-            <small>August 25, 2014 at 9:30 PM</small>
+    <div class="media-body" id="{{ comment["_id"] }}">
+        <h4 class="media-heading">{{ comment["user"] }}
+            <small>{{ locale.format_date(comment["time"]) }}</small>
         </h4>
-        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-        <!-- Nested Comment -->
+        {{ comment["content"] }}
+        <a class="read-more" style="word-break: keep-all; cursor: pointer;" onclick="showComment({{ comment["_id"] }}, {{ comment["user"] }})">回复</a>
+
+        {% if comment["subcomment"] is not None %}
+        {% for subcomment in comment["subcomment"] %}
         <div class="media">
             <a class="pull-left" href="#">
+                {% if comment["isAuthor"] == "1" %}
+                <img class="media-object" src="{{ static_url("images/head.png") }}" alt="">
+                {% else %}
                 <i class="iconfont icon-head"></i>
+                {% end %}
             </a>
-            <div class="media-body">
-                <h4 class="media-heading">Nested Start Bootstrap
-                    <small>August 25, 2014 at 9:30 PM</small>
+            <div class="media-body" id="{{ comment["_id"] }}">
+                <h4 class="media-heading">{{ comment["user"] }}
+                    <small>{{ locale.format_date(comment["time"]) }}</small>
                 </h4>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                {{ comment["content"] }}
+                <a class="read-more" style="word-break: keep-all; cursor: pointer;" onclick="showComment({{ comment["_id"] }}, {{ comment["user"] }})">回复</a>
             </div>
         </div>
-        <!-- End Nested Comment -->
+        {% end %}
+        {% end %}
     </div>
 </div>
+{% end %}
+{% end %}
+
+
+<div class="well" id="commentForm" style="display: none;">
+    <h4>Leave a Comment:</h4>
+    <form role="form">
+        <div class="input-group" style="margin-bottom: 5px;">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-user"></i>
+            </span>
+            <input class="form-control" type="text" placeholder="请输入用户名">
+        </div>
+        <div class="input-group" style="margin-bottom: 5px;">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-envelope"></i>
+            </span>
+            <input class="form-control" type="text" placeholder="请输入邮箱">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script type="text/javascript">
+function showComment(id)
+{
+    $("#commentForm").css("display": "block");
+    $("#"+id).append($("#commentForm"));
+}
+
+function cancelComment()
+{
+    $("#commentForm").css("display": "none");
+}
+</script>
