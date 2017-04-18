@@ -1,4 +1,28 @@
 {% extends base.html %}
 {% block head %}
+<script type="text/javascript" src="https://cdn.knightlab.com/libs/timeline/latest/js/timeline-min.js"></script>
+<script type="text/javascript" src="https://cdn.knightlab.com/libs/timeline/latest/js/storyjs-embed.js"></script>
+<link href="https://cdn.knightlab.com/libs/timeline/latest/css/timeline.css" type="text/css" />
+{% end %}
 
+{% block mainbody %}
+<div class="col-md-12">
+    <div id="timeline-embed" style="height:800px; border-radius: 5px !important; border: 1px solid transparent !important; box-shadow: 0 0 5px #c2c2c2 !important;">
+    </div>
+
+    <script type="text/javascript">
+function InitTimeline(){
+    createStoryJS({
+            type: 'timeline',
+            width: '100%',
+            height: '800px',
+            lang: 'zh-cn',
+            source: {% raw source %},
+            embed_id: 'timeline-embed'
+            });
+}
+
+InitTimeline();
+    </script>
+</div>
 {% end %}
