@@ -30,6 +30,12 @@ class NewBlogHandler(base.BaseHandler):
         data = json.loads(body)
         data["author"] = "Gavin"
         data["time"] = datetime.datetime.now()
+
+        tags = data["tags"]
+        for tag in tags:
+            if self._tags.find({"name": tag}).count() == 0:
+                self._tags.insert_one({"name": tag})
+
         result = self._posts.insert_one(data)
         self.finish({"status": "ok", "redirect": ""})
 

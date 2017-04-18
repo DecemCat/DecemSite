@@ -4,25 +4,13 @@
     </div>
 
     <ul class="list-group list-group-flush">
+        {% for commend in commends %}
         <li class="list-group-item">
             <div class="panel-post-title">
-                <a href="#" title="Bootstrap test title">Bootstrap test title</a>
+                <a href="/post/{{ commend["_id"] }}.html" title="{{ commend["title"] }}">{{ commend["title"] }}</a>
             </div>
-            <span class="badge">772</span>
+            <span class="badge">{{ commend["comments"] }}</span>
         </li>
-
-        <li class="list-group-item">
-            <div class="panel-post-title">
-                <a href="#" title="Bootstrap test title">Bootstrap test title</a>
-            </div>
-            <span class="badge">772</span>
-        </li>
-
-        <li class="list-group-item">
-            <div class="panel-post-title">
-                <a href="#" title="Bootstrap test title">Bootstrap test title</a>
-            </div>
-            <span class="badge">772</span>
-        </li>
+        {% end %}
     </ul>
 </div>

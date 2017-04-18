@@ -18,7 +18,7 @@
             <input class="form-control" name="email" type="text" placeholder="请输入邮箱">
         </div>
         <div class="form-group">
-            <textarea class="form-control" form="comment" name="content" rows="3"></textarea>
+            <textarea class="form-control" form="comment" name="content" rows="3" placeholder="请输入要评论的内容"></textarea>
         </div>
         <button type="button" class="btn btn-primary" onclick="submitComment()">Submit</button>
     </form>
@@ -90,9 +90,10 @@
             <input class="form-control" name="email" type="text" placeholder="请输入邮箱">
         </div>
         <div class="form-group">
-            <textarea class="form-control" rows="3" name="content" form="subCommentForm"></textarea>
+            <textarea class="form-control" rows="3" name="content" form="subCommentForm" placeholder="请输入要评论的内容"></textarea>
         </div>
         <button type="button" class="btn btn-primary" onclick="submitSubComment()">Submit</button>
+        <button type="button" class="btn btn-primary" onclick="cancelComment()" style="margin-left: 10px;">Cancel</button>
     </form>
 </div>
 
@@ -103,13 +104,13 @@ function showComment(article_id, parent_id, comment_id, commentuser)
     v_article_id = article_id;
     v_parent_id = parent_id;
     v_comment_id = comment_id;
-    $("#subComment").css("display": "block");
-    $("#"+id).append($("#subComment"));
+    $("#subComment").css("display", "block");
+    $("#"+comment_id).append($("#subComment"));
 }
 
 function cancelComment()
 {
-    $("#subComment").css("display": "none");
+    $("#subComment").css("display", "none");
 }
 
 function isEmail(strEmail) {
@@ -175,7 +176,7 @@ function submitSubComment()
     $("#subCommentForm").find("input[name='parent_id']").val(v_parent_id);
     $("#subCommentForm").find("input[name='comment_id']").val(v_comment_id);
 
-    $("subCommentForm").submit();
+    $("#subCommentForm").submit();
     return true;
 }
 </script>

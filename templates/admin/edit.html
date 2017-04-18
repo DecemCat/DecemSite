@@ -75,7 +75,7 @@ var tags = {% raw post["tags"] %};
     $(function () {
         $("#article-tags").tags({
             tagData: {% raw post["tags"] %},
-            suggestions:{% raw taglist %},
+            suggestions: [{% for tag in taglist %}"{{ tag }}",{% end %}],
             afterAddingTag: function(tag){
                 tags.push(tag);
             },

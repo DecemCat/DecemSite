@@ -8,8 +8,8 @@ import json
 class TimeLineHandler(tornado.web.RequestHandler):
     def __init__(self, application, request, **kwargs):
         super(TimeLineHandler, self).__init__(application, request, **kwargs)
-        self._timeline = dao.dbase.BaseDBSupport().db("timeline")
-        self._config = dao.dbase.BaseDBSupport().db("config")
+        self._timeline = dao.dbase.BaseDBSupport().db["timeline"]
+        self._config = dao.dbase.BaseDBSupport().db["config"]
 
     def get(self, *args, **kwargs):
         timeline = {}

@@ -1,12 +1,9 @@
-import datetime
 import threading
 
 import bson.errors
-import pymongo
 import tornado.escape
 import tornado.web
 
-import const
 import dao.dbase
 
 comment_lock = threading.RLock()
@@ -16,9 +13,11 @@ from bson import ObjectId
 class TagsHandler(tornado.web.RequestHandler):
     def __init__(self, application, request, **kwargs):
         tornado.web.RequestHandler.__init__(self, application, request, **kwargs)
+        self._posts = dao.dbase.BaseDBSupport().db["posts"]
 
-    def get(self, *args, **kwargs):
-        pass
+    def get(self, tag):
+        posts = self._posts.find({"tags": {"$elemMatch": {"$eq": tag}}})
+        self.render("index.html", posts=posts)
 
 
 
