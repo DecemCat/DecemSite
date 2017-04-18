@@ -3,23 +3,24 @@
 <!-- Comments Form -->
 <div class="well">
     <h4>Leave a Comment:</h4>
-    <form role="form">
+    <form role="form" action="/comment.html" method="post" id="comment">
+        <input type="hidden" name="article_id" value="{{ article_id }}">
         <div class="input-group" style="margin-bottom: 5px;">
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-user"></i>
             </span>
-            <input class="form-control" type="text" placeholder="请输入用户名">
+            <input class="form-control" name="user" type="text" placeholder="请输入用户名">
         </div>
         <div class="input-group" style="margin-bottom: 5px;">
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-envelope"></i>
             </span>
-            <input class="form-control" type="text" placeholder="请输入邮箱">
+            <input class="form-control" name="email" type="text" placeholder="请输入邮箱">
         </div>
         <div class="form-group">
-            <textarea class="form-control" rows="3"></textarea>
+            <textarea class="form-control" form="comment" name="content" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-primary" onclick="submitComment()">Submit</button>
     </form>
 </div>
 
@@ -32,7 +33,7 @@
 {% for comment in comments %}
 <div class="media">
     <a class="pull-left" href="#">
-        {% if comment["isAuthor"] == "1" %}
+        {% if comment["isauthor"] == "1" %}
         <img class="media-object" src="{{ static_url("images/head.png") }}" alt="">
         {% else %}
         <i class="iconfont icon-head"></i>
@@ -43,24 +44,24 @@
             <small>{{ locale.format_date(comment["time"]) }}</small>
         </h4>
         {{ comment["content"] }}
-        <a class="read-more" style="word-break: keep-all; cursor: pointer;" onclick="showComment({{ comment["_id"] }}, {{ comment["user"] }})">回复</a>
+        <a class="read-more" style="word-break: keep-all; cursor: pointer;" onclick="showComment('{{ article_id }}', '{{ comment["_id"] }}', '{{ comment["_id"] }}', '{{ comment["user"] }}')">回复</a>
 
-        {% if comment["subcomment"] is not None %}
+        {% if comment.has_key("subcomment") %}
         {% for subcomment in comment["subcomment"] %}
         <div class="media">
             <a class="pull-left" href="#">
-                {% if comment["isAuthor"] == "1" %}
+                {% if subcomment["isauthor"] == "1" %}
                 <img class="media-object" src="{{ static_url("images/head.png") }}" alt="">
                 {% else %}
                 <i class="iconfont icon-head"></i>
                 {% end %}
             </a>
-            <div class="media-body" id="{{ comment["_id"] }}">
-                <h4 class="media-heading">{{ comment["user"] }}
-                    <small>{{ locale.format_date(comment["time"]) }}</small>
+            <div class="media-body" id="{{ subcomment["_id"] }}">
+                <h4 class="media-heading">{{ subcomment["user"] }}
+                    <small>{{ locale.format_date(subcomment["time"]) }}</small>
                 </h4>
-                {{ comment["content"] }}
-                <a class="read-more" style="word-break: keep-all; cursor: pointer;" onclick="showComment({{ comment["_id"] }}, {{ comment["user"] }})">回复</a>
+                {{ subcomment["content"] }}
+                <a class="read-more" style="word-break: keep-all; cursor: pointer;" onclick="showComment('{{ article_id }}', '{{ comment["_id"] }}', '{{ subcomment["_id"] }}' ,'{{ subcomment["user"] }}')">回复</a>
             </div>
         </div>
         {% end %}
@@ -71,37 +72,110 @@
 {% end %}
 
 
-<div class="well" id="commentForm" style="display: none;">
-    <h4>Leave a Comment:</h4>
-    <form role="form">
+<div class="well" id="subComment" style="display: none; margin-top: 20px;">
+    <form role="form" id="subCommentForm" action="/comment.html" method="post">
+        <input type="hidden" name="comment_id">
+        <input type="hidden" name="article_id">
+        <input type="hidden" name="parent_id">
         <div class="input-group" style="margin-bottom: 5px;">
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-user"></i>
             </span>
-            <input class="form-control" type="text" placeholder="请输入用户名">
+            <input class="form-control" name="user" type="text" placeholder="请输入用户名">
         </div>
         <div class="input-group" style="margin-bottom: 5px;">
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-envelope"></i>
             </span>
-            <input class="form-control" type="text" placeholder="请输入邮箱">
+            <input class="form-control" name="email" type="text" placeholder="请输入邮箱">
         </div>
         <div class="form-group">
-            <textarea class="form-control" rows="3"></textarea>
+            <textarea class="form-control" rows="3" name="content" form="subCommentForm"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-primary" onclick="submitSubComment()">Submit</button>
     </form>
 </div>
 
 <script type="text/javascript">
-function showComment(id)
+var v_article_id, v_parent_id, v_comment_id;
+function showComment(article_id, parent_id, comment_id, commentuser)
 {
-    $("#commentForm").css("display": "block");
-    $("#"+id).append($("#commentForm"));
+    v_article_id = article_id;
+    v_parent_id = parent_id;
+    v_comment_id = comment_id;
+    $("#subComment").css("display": "block");
+    $("#"+id).append($("#subComment"));
 }
 
 function cancelComment()
 {
-    $("#commentForm").css("display": "none");
+    $("#subComment").css("display": "none");
+}
+
+function isEmail(strEmail) {
+    return strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+(([.-])[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) !== -1;
+}
+
+function isNull(param)
+{
+    return param == null || param == undefined || param.length ==0;
+}
+
+function validateForm(user, email, content)
+{
+    if(isNull(user))
+    {
+        alert("用户名不能为空");
+        return false;
+    }
+
+    if(isNull(email))
+    {
+        alert("邮箱不能为空");
+        return false;
+    }
+    if(!isEmail(email))
+    {
+        alert("邮箱格式不合法");
+        return false;
+    }
+    if(isNull(content))
+    {
+        alert("评论内容不能为空");
+        return false;
+    }
+
+    return true;
+}
+
+function submitComment()
+{
+    var user = $("#comment").find("input[name='user']").val();
+    var email = $("#comment").find("input[name='email']").val();
+    var content = $("#comment").find("textarea[name='content']").val();
+    if(!validateForm(user, email, content))
+    {
+        return false;
+    }
+
+    $("#comment").submit();
+    return true;
+}
+
+function submitSubComment()
+{
+    var user = $("#subCommentForm").find("input[name='user']").val();
+    var email = $("#subCommentForm").find("input[name='email']").val();
+    var content = $("#subCommentForm").find("textarea[name='content']").val();
+    if(!validateForm(user, email, content))
+    {
+        return false;
+    }
+    $("#subCommentForm").find("input[name='article_id']").val(v_article_id);
+    $("#subCommentForm").find("input[name='parent_id']").val(v_parent_id);
+    $("#subCommentForm").find("input[name='comment_id']").val(v_comment_id);
+
+    $("subCommentForm").submit();
+    return true;
 }
 </script>
