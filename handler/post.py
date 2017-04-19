@@ -5,19 +5,21 @@ import tornado.escape
 import tornado.web
 
 import dao.dbase
+import list
 
 comment_lock = threading.RLock()
 from bson import ObjectId
 
 
-class TagsHandler(tornado.web.RequestHandler):
+class TagsHandler(list.ListHandler):
     def __init__(self, application, request, **kwargs):
         tornado.web.RequestHandler.__init__(self, application, request, **kwargs)
-        self._posts = dao.dbase.BaseDBSupport().db["posts"]
+        self.init()
 
     def get(self, tag):
-        posts = self._posts.find({"tags": {"$elemMatch": {"$eq": tag}}})
-        self.render("index.html", posts=posts)
+        if not self.set_param(1, None, tag):
+            return
+        self.get_process()
 
 
 

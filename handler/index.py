@@ -1,31 +1,24 @@
 import tornado.web
-import dao.dbase
-import pymongo
+import list
 
-class IndexHandler(tornado.web.RequestHandler):
+class IndexHandler(list.ListHandler):
     def __init__(self, application, request, **kwargs):
         tornado.web.RequestHandler.__init__(self, application, request,
                 **kwargs)
-        connection = dao.dbase.BaseDBSupport()
-        self._blog = connection.db["posts"]
+        self.init()
 
     @tornado.web.asynchronous
-    def get(self):
-        total_count = self._blog.find({}).count()
+    def get(self, *args, **kwargs):
+        keyword = None
+        page = 1
+
+        if self.request.arguments.has_key("kw"):
+            keyword = self.get_argument("kw")
+
         if self.request.arguments.has_key("page"):
             page = int(self.get_argument("page"))
-            if page == 0:
-                page = total_count / 10 + 1 if total_count % 10 != 0 else 0
-                self.redirect('index.html?page=' + str(page))
-                return
-        else:
-            page = 1
 
-        if total_count <= (page - 1) * 10:
-            self.redirect('index.html?page=1')
+        if not self.set_param(page, keyword, None):
             return
 
-        posts = self._blog.find({}).sort('time', pymongo.DESCENDING).skip((page - 1) * 10).limit(10)
-        if posts is None:
-            posts = {}
-        self.render('index.html', posts=posts, page=page)
+        self.get_process()
