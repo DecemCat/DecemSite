@@ -71,10 +71,10 @@
 <script src="{{ static_url("admin/vendors/tags/js/bootstrap-tags.min.js") }}"></script>
 <script src="{{ static_url("admin/js/custom.js") }}"></script>
 <script type="text/javascript">
-var tags = {% raw post["tags"] %};
+var tags = [{% for tag in post["tags"] %} "{{tag}}", {% end %}];
     $(function () {
         $("#article-tags").tags({
-            tagData: {% raw post["tags"] %},
+            tagData: [{% for tag in post["tags"] %} "{{tag}}", {% end %}],
             suggestions: [{% for tag in taglist %}"{{ tag }}",{% end %}],
             afterAddingTag: function(tag){
                 tags.push(tag);
@@ -83,7 +83,7 @@ var tags = {% raw post["tags"] %};
                 tags.splice($.inArray(tag, tags), 1);
             }
         });
-    })
+    });
 
 function editSubmit()
 {

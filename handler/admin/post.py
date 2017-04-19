@@ -2,6 +2,7 @@ import pymongo
 import tornado.web
 import datetime
 import json
+from bson.objectid import ObjectId
 
 import dao.dbase
 import base
@@ -17,12 +18,22 @@ class NewBlogHandler(base.BaseHandler):
 
     @tornado.web.authenticated
     def get(self, *args, **kwargs):
+        article_id = None
+        try:
+            article_id = self.get_argument("article_id")
+        except tornado.web.MissingArgumentError:
+            article_id = None
+
+        post = const.INIT_POST
+        if article_id is not None:
+            post = self._posts.find_one({"_id": ObjectId(article_id)})
+
         taglist = []
         tags = self._tags.find({})
         if tags:
             for tag in tags:
                 taglist.append(tag["name"])
-        self.render("admin/edit.html", post=const.INIT_POST, taglist=taglist, dealurl="new.html")
+        self.render("admin/edit.html", post=post, taglist=taglist, dealurl="edit.html")
 
     @tornado.web.authenticated
     def post(self, *args, **kwargs):

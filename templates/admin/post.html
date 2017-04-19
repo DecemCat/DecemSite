@@ -10,7 +10,7 @@
 <div class="content-box-large">
     <div class="panel-heading">
         <div class="panel-title">Blogs List</div>
-        <a class="btn btn-primary btn-xs" href="new.html">New Blog</a>
+        <a class="btn btn-primary btn-xs" href="edit.html">New Blog</a>
     </div>
     <div class="panel-body">
         <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
@@ -33,11 +33,11 @@
             {% end %}
 
             <td>{{ post["title"] }}</td>
-            <td>{{ post["tags"] }}</td>
+            <td>{% for tag in post["tags"] %}{{ tags }},{% end %}</td>
             <td>{{ post["time"] }}</td>
             <td>
                 <ul class="operateBar">
-                    <li><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></li>
+                    <li><a href="/manage/edit.html?article_id={{ post["_id"] }}"><span class="glyphicon glyphicon-pencil"></span></a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span></a></li>
                 </ul>
             </td>
