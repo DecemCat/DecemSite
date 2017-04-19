@@ -61,3 +61,15 @@ class BlogManageHandler(base.BaseHandler):
     def get(self, *args, **kwargs):
         posts = self._post.find({}, {"title":1, "time":1, "tags":1}).sort("time", pymongo.DESCENDING)
         self.render("admin/post.html", posts=posts)
+
+
+class DeleteBlogHandler(base.BaseHandler):
+    def __init__(self, application, request, **kwargs):
+        super(DeleteBlogHandler, self).__init__(application, request, **kwargs)
+        self._posts = dao.dbase.BaseDBSupport().db["posts"]
+
+    @tornado.web.authenticated
+    def get(self, *args, **kwargs):
+        if self.request.arguments.has_key("article_id"):
+            self._posts.delete_one({"_id": ObjectId(self.get_argument("article_id"))})
+        self.redirect("/manage/post.html")

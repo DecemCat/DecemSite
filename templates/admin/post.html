@@ -33,12 +33,12 @@
             {% end %}
 
             <td>{{ post["title"] }}</td>
-            <td>{% for tag in post["tags"] %}{{ tags }},{% end %}</td>
+            <td>{% for tag in post["tags"] %}{{ tag }},{% end %}</td>
             <td>{{ post["time"] }}</td>
             <td>
                 <ul class="operateBar">
                     <li><a href="/manage/edit.html?article_id={{ post["_id"] }}"><span class="glyphicon glyphicon-pencil"></span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-remove-circle"></span></a></li>
+                    <li><a href="/manage/delete.html?article_id={{ post["_id"] }}"><span class="glyphicon glyphicon-remove-circle"></span></a></li>
                 </ul>
             </td>
             </tr>

@@ -3,9 +3,10 @@ import tornado.web
 import re
 
 import dao.dbase
+PAGE_SIZE = 5
 
 
-class ListHander(tornado.web.RequestHandler):
+class ListHandler(tornado.web.RequestHandler):
     def init(self):
         self._page = None
         self._tag = None
@@ -21,34 +22,35 @@ class ListHander(tornado.web.RequestHandler):
         return url
 
     def set_param(self, page, keyword, tag):
+        if keyword:
+            self._keyword = keyword
+
+        self._tag = tag
+
         if page is None:
             self._page = 1
         else:
-            total_count = self._posts.find({}).count()
+            total_count = self._posts.find(self.get_condition()).count()
             if page == 0:
-                page = total_count / 10 + 1 if total_count % 10 != 0 else 0
+                page = total_count / PAGE_SIZE + 1 if total_count % PAGE_SIZE != 0 else 0
                 self.redirect(self._get_url(page, keyword, tag))
                 return False
-            if page != 1 and total_count <= (page - 1) * 10:
+            if page != 1 and total_count <= (page - 1) * PAGE_SIZE:
                 self.redirect(self._get_url(1, keyword, tag))
                 return False
             self._page = page
 
-        if keyword:
-            self._keyword = keyword.trip()
-
-        self._tag = tag
         return True
 
     def get_process(self):
         posts = self._posts.find(self.get_condition()).skip(self.get_skip()).limit(self.get_limit())
-        self.render('index.html', posts=posts, page=self._page, keyword=self._keyword, tag=self._tag)
+        self.render('index.html', posts=posts, page=self._page, keyword=self._keyword, ct=self._tag)
 
     def get_skip(self):
-        return (self._page - 1) * 10
+        return (self._page - 1) * PAGE_SIZE
 
     def get_limit(self):
-        return 10
+        return PAGE_SIZE
 
     def get_condition(self):
         condition = {}

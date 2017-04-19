@@ -25,7 +25,7 @@ $(function(){
             <span class="glyphicon glyphicon-time"></span>
             <a href="#">{{ post["author"] }}</a> Posted on {{ locale.format_date(post["time"], shorter=True) }}
             {% for tag in post["tags"] %}
-            <a class="post-tag-link" href="/tag/{{tag}}.html">{{ tag }}</a>
+            <a class="post-tag-link" href="/list.html?tag={{tag}}">{{ tag }}</a>
             {% end %}
         </div>
     </div>

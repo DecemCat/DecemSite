@@ -1,4 +1,7 @@
 {% extends base.html %}
+{% block nav %}
+{% module nav(keyword if keyword else '') %}
+{% end %}
 
 {% block content %}
 <ul class="home post-list">
@@ -11,7 +14,7 @@
                     <span class="glyphicon glyphicon-time"></span>
                     <a>{{ post["author"] }}</a> Posted on {{ locale.format_date(post["time"], shorter=True) }}
                     {% for tag in post["tags"] %}
-                    <a class="post-tag-link" href="/tag/{{ tag }}.html">{{ tag }}</a>
+                    <a class="post-tag-link" href="/list.html?tag={{ tag }}">{{ tag }}</a>
                     {% end %}
                 </div>
             </div>
@@ -28,10 +31,10 @@
 <!-- Pager -->
 <ul class="pager">
     <li class="previous">
-    <a href="index.html?page={% raw page - 1 %}">上一页</a>
+    <a href="index.html?page={% raw page - 1 %}{% if ct %}&tag={{ ct }}{% end %}{% if keyword %}&keyword={{ keyword }}{% end %}">上一页</a>
     </li>
     <li class="next">
-        <a href="index.html?page={% raw page + 1 %}">下一页</a>
+        <a href="index.html?page={% raw page + 1 %}{% if ct %}&tag={{ ct }}{% end %}{% if keyword %}&keyword={{ keyword }}{% end %}">下一页</a>
     </li>
 </ul>
 

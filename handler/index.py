@@ -11,14 +11,18 @@ class IndexHandler(list.ListHandler):
     def get(self, *args, **kwargs):
         keyword = None
         page = 1
+        tag = None
 
-        if self.request.arguments.has_key("kw"):
-            keyword = self.get_argument("kw")
+        if self.request.arguments.has_key("keyword"):
+            keyword = self.get_argument("keyword")
 
         if self.request.arguments.has_key("page"):
             page = int(self.get_argument("page"))
 
-        if not self.set_param(page, keyword, None):
+        if self.request.arguments.has_key("tag"):
+            tag = self.get_argument("tag")
+
+        if not self.set_param(page, keyword, tag):
             return
 
         self.get_process()

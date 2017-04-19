@@ -22,7 +22,7 @@ class UEditorHandler(base.BaseHandler):
         action = self.get_argument('action')
 
         # 解析JSON格式的配置文件
-        with open(os.path.join(os.path.dirname(__file__), '..', '..', 'config', 'config,json')) as fp:
+        with open(os.path.join(os.path.dirname(__file__), '..', '..', 'config', 'config.json')) as fp:
             try:
                 CONFIG = json.loads(re.sub(r'\/\*.*\*\/', '', fp.read()))
             except:
