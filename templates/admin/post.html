@@ -38,7 +38,7 @@
             <td>
                 <ul class="operateBar">
                     <li><a href="/manage/edit.html?article_id={{ post["_id"] }}"><span class="glyphicon glyphicon-pencil"></span></a></li>
-                    <li><a href="/manage/delete.html?article_id={{ post["_id"] }}"><span class="glyphicon glyphicon-remove-circle"></span></a></li>
+                    <li><a onclick="deleteConfirm('/manage/delete.html?article_id={{ post["_id"] }}')"><span class="glyphicon glyphicon-remove-circle"></span></a></li>
                 </ul>
             </td>
             </tr>
@@ -50,6 +50,14 @@
 {% end %}
 
 {% block script %}
+<script type="text/javascript">
+    function deleteConfirm(url) {
+        if(window.confirm('确认要删除该博文吗？'))
+        {
+            window.location.href = url;
+        }
+    }
+</script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery.js"></script>
 <!-- jQuery UI -->
