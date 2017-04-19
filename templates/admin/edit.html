@@ -43,11 +43,12 @@
             <div class="form-group">
                 <label class="col-sm-1 control-label">Text</label>
                 <div class="col-sm-11">
+                    <div style="display:none;" id="uecontent">{% raw post["content"] %}</div>
                     <script id="editor" type="text/plain" name="content" style="min-height: 400px; padding-bottom: 20px"></script>
                     <script type="text/javascript">
-                    var ue = UE.getEditor("editor")
+                    var ue = UE.getEditor("editor");
                     ue.ready(function(){
-                            ue.setContent("{% raw post["content"] %}");
+                            ue.setContent($("#uecontent").html());
                             });
                     </script>
                 </div>
