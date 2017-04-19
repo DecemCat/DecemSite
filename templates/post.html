@@ -1,10 +1,18 @@
 {% extends base.html %}
 
 {% block head %}
+<script type="text/javascript" src="{{ static_url("ueditor/third-party/SyntaxHighlighter/shCore.js") }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ static_url("ueditor/third-party/SyntaxHighlighter/shCoreDefault.css") }}">
 <style type="text/css">
     .media>a{text-decoration: none; color: #999;}
     .media .pull-left .iconfont{font-size: 65px;}
 </style>
+
+<script type="text/javascript">
+$(function(){
+        SyntaxHighlighter.all();
+        });
+</script>
 {% end %}
 
 {% block content %}
