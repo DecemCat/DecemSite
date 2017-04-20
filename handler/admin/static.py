@@ -11,25 +11,27 @@ class AboutMgrHandler(base.BaseHandler):
     def __init__(self, application, request, **kwargs):
         super(AboutMgrHandler, self).__init__(application, request, **kwargs)
         self._static = dao.dbase.BaseDBSupport().db["static"]
+        self._config = dao.dbase.BaseDBSupport().db["config"]
 
     @tornado.web.authenticated
     def get(self, *args, **kwargs):
         init_dict = const.INIT_STATIC.copy()
         init_dict.update({"type": "about"})
         static = self._static.find_one({"type":"about"}) or init_dict
-        self.render("admin/static.html", static=static)
+        introduce = self._config.find_one({"key": "info.introduce"})["value"]
+        self.render("admin/static.html", static=static, introduce=introduce)
 
     @tornado.web.authenticated
     def post(self, *args, **kwargs):
-        titles = self.get_body_arguments("title")
-        contents = self.get_body_arguments("content")
-        if not titles or not contents:
+        title = self.get_body_argument("title")
+        content = self.get_body_argument("content")
+        introduce = self.get_body_argument("introduce")
+        if not title or not content:
             self.finish({"status": "fail"})
 
-        title = titles[0]
-        content = contents[0]
         time = datetime.datetime.now()
         self._static.update({"type": "about"}, {"$set": {"title": title, "content": content, "time": time, "type": "about"}}, upsert=True)
+        self._config.update({"key": "info.introduce"}, {"$set": {"value": introduce}})
         self.finish({"status": "ok", "redirect": "/about.html"})
 
 

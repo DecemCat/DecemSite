@@ -31,6 +31,13 @@
             </div>
 
             <div class="form-group">
+                <label class="col-sm-1 control-label">Introduce</label>
+                <div class="col-sm-11">
+                    <textarea class="form-control" name="introduce" placeholder="add introduce">{% raw introduce %}</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-sm-1 control-label">Text</label>
                 <div class="col-sm-11">
                     <div style="display:none;" id="uecontent">{% raw static["content"] %}</div>
@@ -63,14 +70,11 @@
     function submit_static()
     {
         var title = $("input[name='title']").val();
+        var introduce = $("textarea[name='introduce']").val();
         content = ue.getContent();
-        {% if static["type"] == "about" %}
-            var requrl = "about.html";
-        {% else %}
-            var requrl = "life.html";
-        {% end %}
+        var requrl = "about.html";
 
-        $.post(requrl, {"title": title, "content": content}, function (body) {
+        $.post(requrl, {"title": title, "content": content, "introduce": introduce}, function (body) {
             if (body.status == "ok")
             {
                 window.location.href=body.redirect;

@@ -49,7 +49,7 @@ class NewBlogHandler(base.BaseHandler):
                 self._tags.insert_one({"name": tag})
 
         if article_id:
-            self._post.update({"_id": ObjectId(article_id)}, {"$set": data})
+            self._posts.update({"_id": ObjectId(article_id)}, {"$set": data})
         else:
             self._posts.insert_one(data)
         self.finish({"status": "ok", "redirect": "/manage/post.html"})
