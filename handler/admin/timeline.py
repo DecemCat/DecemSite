@@ -60,6 +60,6 @@ class DelTimelineHandler(base.BaseHandler):
     def get(self, *args, **kwargs):
         tmid = self.get_argument("id")
         if tmid:
-            self._timeline.delte_one({"_id": ObjectId(tmid)})
+            self._timeline.delete_one({"_id": ObjectId(tmid)})
 
         self.redirect("/manage/life.html")
