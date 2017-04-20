@@ -8,6 +8,11 @@
 <script type="text/javascript" charset="utf-8" src="{{ static_url("ueditor/ueditor.all.min.js") }}"></script>
 <script type="text/javascript" charset="utf-8" src="{{ static_url("ueditor/lang/zh-cn/zh-cn.js") }}"></script>
 {% end %}
+
+{% block adminnav %}
+{% module adminnav(3) %}
+{% end %}
+
 {% block content %}
 <div class="content-box-large">
     <div class="panel-heading">
@@ -28,6 +33,7 @@
             <div class="form-group">
                 <label class="col-sm-1 control-label">Text</label>
                 <div class="col-sm-11">
+                    <div style="display:none;" id="uecontent">{% raw static["content"] %}</div>
                     <script id="editor" type="text/plain" name="content" style="min-height: 400px; padding-bottom: 20px"></script>
                 </div>
             </div>
@@ -51,7 +57,7 @@
 <script type="text/javascript">
     var ue = UE.getEditor("editor");
     ue.ready(function () {
-        ue.setContent("{% raw static["content"] %}");
+        ue.setContent($("#uecontent").html());
     });
 
     function submit_static()

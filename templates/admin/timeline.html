@@ -7,28 +7,28 @@
 {% end %}
 
 {% block adminnav %}
-{% module adminnav(4) %}
+{% module adminnav(2) %}
 {% end %}
 
 {% block content %}
 <div class="content-box-large">
     <div class="panel-heading">
         <div class="panel-title">Blogs List</div>
-        <a class="btn btn-primary btn-xs" href="edit.html">New Blog</a>
+        <a class="btn btn-primary btn-xs" href="editdate.html">New Date</a>
     </div>
     <div class="panel-body">
         <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
             <thead>
             <tr>
-                <th width="60%">Title</th>
-                <th>Tags</th>
-                <th>Time</th>
+                <th width="60%">Headline</th>
+                <th>startDate</th>
+                <th>endDate</th>
                 <th width="10%">Operation</th>
             </tr>
             </thead>
             <tbody>
             {% set idx = 0 %}
-            {% for post in posts %}
+            {% for timeline in timelines %}
             {% set idx = idx + 1 %}
             {% if (idx + 1) % 2 == 1 %}
             <tr class="odd">
@@ -36,13 +36,13 @@
             <tr class="even">
             {% end %}
 
-            <td>{{ post["title"] }}</td>
-            <td>{% for tag in post["tags"] %}{{ tag }},{% end %}</td>
-            <td>{{ post["time"] }}</td>
+            <td>{{ timeline["headline"] }}</td>
+            <td>{{ timeline["startDate"] }}</td>
+            <td>{{ timeline["endDate"] }}</td>
             <td>
                 <ul class="operateBar">
-                    <li><a href="/manage/edit.html?article_id={{ post["_id"] }}"><span class="glyphicon glyphicon-pencil"></span></a></li>
-                    <li><a href="/manage/delete.html?article_id={{ post["_id"] }}"><span class="glyphicon glyphicon-remove-circle"></span></a></li>
+                    <li><a href="/manage/editdate.html?id={{ timeline["_id"] }}"><span class="glyphicon glyphicon-pencil"></span></a></li>
+                    <li><a href="/manage/deldate.html?id={{ timeline["_id"] }}"><span class="glyphicon glyphicon-remove-circle"></span></a></li>
                 </ul>
             </td>
             </tr>
