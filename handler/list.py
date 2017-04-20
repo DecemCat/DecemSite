@@ -1,6 +1,7 @@
 # coding=utf-8
 import tornado.web
 import re
+import pymongo
 
 import dao.dbase
 PAGE_SIZE = 5
@@ -43,7 +44,7 @@ class ListHandler(tornado.web.RequestHandler):
         return True
 
     def get_process(self):
-        posts = self._posts.find(self.get_condition()).skip(self.get_skip()).limit(self.get_limit())
+        posts = self._posts.find(self.get_condition()).sort("time", pymongo.DESCENDING).skip(self.get_skip()).limit(self.get_limit())
         self.render('index.html', posts=posts, page=self._page, keyword=self._keyword, ct=self._tag)
 
     def get_skip(self):
