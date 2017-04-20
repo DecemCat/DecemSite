@@ -1,0 +1,91 @@
+{% extends base.html %}
+{% block head %}
+<link href="{{ static_url("admin/vendors/select/bootstrap-select.min.css") }}" rel="stylesheet">
+<link href="{{ static_url("admin/vendors/tags/css/bootstrap-tags.css") }}" rel="stylesheet">
+<link href="{{ static_url("admin/css/forms.css") }}" rel="stylesheet">
+{% end %}
+
+{% block adminnav %}
+{% module adminnav(2) %}
+{% end %}
+
+{% block content %}
+<div class="content-box-large">
+    <div class="panel-heading">
+        <div class="panel-title">Edit Timeline</div>
+
+        <div class="panel-options">
+        </div>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" role="form" action="/manage/editdate.html" method="post" id="timelineForm">
+            <input type="hidden" name="_id" value="{{ timeline["_id"] }}">
+            <div class="form-group">
+                <label class="col-sm-1 control-label">headline</label>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control" name="headline"  value="{{ timeline["headline"] }}" placeholder="请输入标题">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label">startDate</label>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control" name="startDate"  value="{{ timeline["startDate"] }}" placeholder="请输入开始时间，格式yyyy,mm,dd">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label">endDate</label>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control" name="endDate"  value="{{ timeline["endDate"] }}" placeholder="请输入结束时间，格式yyyy,mm,dd">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label">text</label>
+                <div class="col-sm-11">
+                    <textarea type="text" class="form-control" name="text" form="timelineForm"  placeholder="请输入文本内容">{{ timeline["text"] }}</textarea>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label">media</label>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control" name="media"  value="{{ timeline["asset"]["media"] }}" placeholder="请输入媒体链接">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label">credit</label>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control" name="credit"  value="{{ timeline["asset"]["credit"] }}" placeholder="请输入媒体描述">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-1 control-label">caption</label>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control" name="caption"  value="{{ timeline["asset"]["caption"] }}" placeholder="请输入媒体标题">
+                </div>
+            </div>
+
+            <div class="form-group bootstrap-tags bootstrap-3">
+                <div class="col-sm-offset-1 col-sm-11">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+{% end %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="{{ static_url("admin/vendors/select/bootstrap-select.min.js") }}"></script>
+<script src="{{ static_url("admin/js/custom.js") }}"></script>
+{% end %}
+

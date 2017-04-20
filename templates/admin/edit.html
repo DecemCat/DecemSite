@@ -8,6 +8,11 @@
 <script type="text/javascript" charset="utf-8" src="{{ static_url("ueditor/ueditor.all.min.js") }}"></script>
 <script type="text/javascript" charset="utf-8" src="{{ static_url("ueditor/lang/zh-cn/zh-cn.js") }}"></script>
 {% end %}
+
+{% block adminnav %}
+{% module adminnav(4) %}
+{% end %}
+
 {% block content %}
 <div class="content-box-large">
     <div class="panel-heading">
@@ -18,6 +23,7 @@
     </div>
     <div class="panel-body">
         <form class="form-horizontal" role="form">
+            <input type="hidden" name="article_id" value="{{ post["_id"] }}"
             <div class="form-group">
                 <label class="col-sm-1 control-label">Title</label>
                 <div class="col-sm-11">
@@ -89,10 +95,12 @@ var tags = [{% for tag in post["tags"] %} "{{tag}}", {% end %}];
 function editSubmit()
 {
     var title = $("input[name='title']").val();
+    var article_id = $("input[name='article_id']").val();
     var brief = $("#brief").val();
     var content = ue.getContent();
 
     var sendData = {
+        _id: article_id,
         title:title,
         brief: brief,
         content: content,

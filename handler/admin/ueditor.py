@@ -4,6 +4,7 @@ import os.path
 import re
 
 import base
+from handler.admin.uploader import Uploader
 
 class UEditorHandler(base.BaseHandler):
 

@@ -41,14 +41,18 @@ class NewBlogHandler(base.BaseHandler):
         data = json.loads(body)
         data["author"] = "Gavin"
         data["time"] = datetime.datetime.now()
+        article_id = data.pop("_id")
 
         tags = data["tags"]
         for tag in tags:
             if self._tags.find({"name": tag}).count() == 0:
                 self._tags.insert_one({"name": tag})
 
-        result = self._posts.insert_one(data)
-        self.finish({"status": "ok", "redirect": ""})
+        if article_id:
+            self._post.update({"_id": ObjectId(article_id)}, {"$set": data})
+        else:
+            self._posts.insert_one(data)
+        self.finish({"status": "ok", "redirect": "/manage/post.html"})
 
 
 class BlogManageHandler(base.BaseHandler):

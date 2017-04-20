@@ -27,7 +27,8 @@ _const.DBPASS = "dbpass"
 
 
 _const.INIT_STATIC = {"title":"", "content": "", "time": ""}
-_const.INIT_POST = {"title": "", "content":"", "time": "", "tags": [], "brief":""}
+_const.INIT_POST = {"_id": "","title": "", "content":"", "time": "", "tags": [], "brief":""}
+_const.INIT_TIMELINE = {"_id": "","headline": "", "text":"", "startDate": "", "endDate": "", "asset":{"media":"", "credit":"", "caption": ""}}
 
 _const.PAGE_SIZE = 5
 import sys
