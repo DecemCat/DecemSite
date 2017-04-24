@@ -16,6 +16,7 @@ class BlogHandler(tornado.web.RequestHandler):
         tornado.web.RequestHandler.__init__(self, application, request, **kwargs)
         connection = dao.dbase.BaseDBSupport()
         self._posts = connection.db["posts"]
+        self._config = connection.db["config"]
 
     def get(self, blog_id):
         try:
@@ -26,4 +27,6 @@ class BlogHandler(tornado.web.RequestHandler):
         blogs = self._posts.find({'_id': ObjectId(blog_id)})
         if blogs.count() == 0:
             raise tornado.web.HTTPError(404)
-        self.render('post.html', post=blogs[0])
+
+        flag = self._config.find_one({"key": "post.comment.flag"})["value"]
+        self.render('post.html', post=blogs[0], flag=flag)
