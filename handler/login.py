@@ -5,6 +5,8 @@ import dao.dbase
 import datetime
 import hashlib
 
+import commutil.utils
+
 
 class LoginHandler(tornado.web.RequestHandler):
     def __init__(self, application, request, **kwargs):
@@ -68,8 +70,9 @@ class PasswordHandler(tornado.web.RequestHandler):
         email_count = self._user.find({"email": email}).count()
         if email_count == 0:
             return
-        #password = self._gen_password(10)
-        password = "123456"
+        password = self._gen_password(10)
+        commutil.utils.EmailUtils.send_mail([email], "Your password this time!", password)
+
         self._user.update({"email": email}, {"$set": {"update": datetime.datetime.now(), "passwd": password}})
 
     def _gen_password(self, length):
