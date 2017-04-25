@@ -1,6 +1,7 @@
 __author__ = 'Administrator'
 import smtplib
 import dao.dbase
+import traceback
 from email.mime.text import MIMEText
 
 class EmailUtils:
@@ -22,6 +23,6 @@ class EmailUtils:
             server.sendmail(me, to_list, msg.as_string())
             server.close()
             return True
-        except Exception, e:
-            print str(e)
+        except:
+            traceback.print_exc()
             return False

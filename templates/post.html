@@ -1,6 +1,10 @@
 {% extends base.html %}
+{% block title %}
+<title>九三散人 - {{ post["title"] }}</title>
+{% end %}
 
 {% block head %}
+<title></title>
 <script type="text/javascript" src="{{ static_url("ueditor/third-party/SyntaxHighlighter/shCore.js") }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ static_url("ueditor/third-party/SyntaxHighlighter/shCoreDefault.css") }}">
 <style type="text/css">

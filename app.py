@@ -16,6 +16,7 @@ def convert_arr(handlers):
         hans = handler[1].split(":")
         last_arr.append((handler[0], getattr(importlib.import_module(hans[0]), hans[1])))
     last_arr.append((r'/favicon.ico', tornado.web.StaticFileHandler, {"path":""}))
+    last_arr.append((r'/robots.txt', tornado.web.StaticFileHandler, {"path":""}))
     return last_arr
 
 

@@ -71,7 +71,7 @@ class PasswordHandler(tornado.web.RequestHandler):
         if email_count == 0:
             return
         password = self._gen_password(10)
-        commutil.utils.EmailUtils.send_mail([email], "Your password this time!", password)
+        #commutil.utils.EmailUtils.send_mail([email], "Your password this time!", password)
 
         self._user.update({"email": email}, {"$set": {"update": datetime.datetime.now(), "passwd": password}})
         self.finish({"status": "ok"})
