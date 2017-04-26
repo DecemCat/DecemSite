@@ -39,8 +39,6 @@ class NewBlogHandler(base.BaseHandler):
     def post(self, *args, **kwargs):
         body = self.request.body
         data = json.loads(body)
-        data["author"] = "Gavin"
-        data["time"] = datetime.datetime.now()
         article_id = data.pop("_id")
 
         tags = data["tags"]
@@ -51,6 +49,8 @@ class NewBlogHandler(base.BaseHandler):
         if article_id:
             self._posts.update({"_id": ObjectId(article_id)}, {"$set": data})
         else:
+            data["time"] = datetime.datetime.now()
+            data["author"] = "Gavin"
             self._posts.insert_one(data)
         self.finish({"status": "ok", "redirect": "/manage/post.html"})
 
