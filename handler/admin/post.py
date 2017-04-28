@@ -55,9 +55,11 @@ class NewBlogHandler(base.BaseHandler):
             data["author"] = "Gavin"
             result = self._posts.insert_one(data)
             url = 'http://www.0x12345.com/post/' + str(result.inserted_id) + '.html'
-            baidu_url = self._config.find({'key': 'config.baidu.url'})['value']
-            req = urllib2.urlopen(url=baidu_url, data=url)
-            req.read()
+            baidu_url = self._config.find_one({'key': 'config.baidu.url'})['value']
+            headers = {'Content-Type': 'text/plain'}
+            req = urllib2.Request(baidu_url, url, headers)
+            res = urllib2.urlopen(req)
+            res.read()
         self.finish({"status": "ok", "redirect": "/manage/post.html"})
 
 
