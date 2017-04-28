@@ -6,6 +6,8 @@ import tornado.httpserver
 import tornado.options
 import const
 import importlib
+import logging
+import logging.config
 
 from config import ConfigReader
 
@@ -29,6 +31,7 @@ def convert_dict(modules):
 
 
 if __name__ == '__main__':
+    logging.config.fileConfig('log.conf')
     cr = ConfigReader()
     handlers = cr.readAll(const.HANDLER_CONF, const.HANDLER_SECTION)
     modules = cr.readAsDic(const.MODULE_CONF, const.UIMODULE_SECTION)
