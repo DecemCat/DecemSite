@@ -4,7 +4,7 @@
 {% end %}
 
 {% block head %}
-<title></title>
+<meta name="description" content="{% if post.has_key("desc") %}post["desc"]{% end %}">
 <script type="text/javascript" src="{{ static_url("ueditor/third-party/SyntaxHighlighter/shCore.js") }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ static_url("ueditor/third-party/SyntaxHighlighter/shCoreDefault.css") }}">
 <style type="text/css">

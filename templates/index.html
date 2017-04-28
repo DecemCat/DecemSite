@@ -1,4 +1,9 @@
 {% extends base.html %}
+
+{% block head%}
+    <meta name="description" content="九三散人的官网首页">
+{% end %}
+
 {% block nav %}
 {% module nav(keyword if keyword else '') %}
 {% end %}

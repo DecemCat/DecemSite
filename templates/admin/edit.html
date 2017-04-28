@@ -45,6 +45,13 @@
             </div>
 
             <div class="form-group">
+                <label class="col-sm-1 control-label">Description</label>
+                <div class="col-sm-11">
+                    <textarea class="form-control" id="desc" placeholder="Enter Post Description" rows="3">{{ post["desc"] }}</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-sm-1 control-label">Text</label>
                 <div class="col-sm-11">
                     <div style="display:none;" id="uecontent">{% raw post["content"] %}</div>
@@ -95,12 +102,14 @@ function editSubmit()
     var title = $("input[name='title']").val();
     var article_id = $("input[name='article_id']").val();
     var brief = $("#brief").val();
+    var desc = $("desc").val();
     var content = ue.getContent();
 
     var sendData = {
         _id: article_id,
         title:title,
         brief: brief,
+        desc: desc,
         content: content,
         tags: tags
     };
