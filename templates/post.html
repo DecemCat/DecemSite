@@ -1,10 +1,13 @@
 {% extends base.html %}
+{% block meta %}
+<meta name="description" content="{% if post.has_key("desc") %}{{ post["desc"] }}{% end %}">
+{% end %}
+
 {% block title %}
 <title>九三散人 - {{ post["title"] }}</title>
 {% end %}
 
 {% block head %}
-<meta name="description" content="{% if post.has_key("desc") %}post["desc"]{% end %}">
 <script type="text/javascript" src="{{ static_url("ueditor/third-party/SyntaxHighlighter/shCore.js") }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ static_url("ueditor/third-party/SyntaxHighlighter/shCoreDefault.css") }}">
 <style type="text/css">

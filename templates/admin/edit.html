@@ -47,7 +47,7 @@
             <div class="form-group">
                 <label class="col-sm-1 control-label">Description</label>
                 <div class="col-sm-11">
-                    <textarea class="form-control" id="desc" placeholder="Enter Post Description" rows="3">{{ post["desc"] }}</textarea>
+                    <textarea class="form-control" id="desc" placeholder="Enter Post Description" rows="3">{% if post.has_key("desc") %}{{ post["desc"] }}{% end %}</textarea>
                 </div>
             </div>
 
@@ -102,7 +102,7 @@ function editSubmit()
     var title = $("input[name='title']").val();
     var article_id = $("input[name='article_id']").val();
     var brief = $("#brief").val();
-    var desc = $("desc").val();
+    var desc = $("#desc").val();
     var content = ue.getContent();
 
     var sendData = {

@@ -2,6 +2,7 @@ import pymongo
 import tornado.web
 import datetime
 import json
+import urllib2
 from bson.objectid import ObjectId
 
 import dao.dbase
@@ -14,6 +15,7 @@ class NewBlogHandler(base.BaseHandler):
         super(NewBlogHandler, self).__init__(application, request, **kwargs)
         dbs = dao.dbase.BaseDBSupport()
         self._tags = dbs.db["tags"]
+        self._config = dbs.db["config"]
         self._posts = dbs.db["posts"]
 
     @tornado.web.authenticated
@@ -51,7 +53,11 @@ class NewBlogHandler(base.BaseHandler):
         else:
             data["time"] = datetime.datetime.now()
             data["author"] = "Gavin"
-            self._posts.insert_one(data)
+            result = self._posts.insert_one(data)
+            url = 'http://www.0x12345.com/post/' + str(result.inserted_id) + '.html'
+            baidu_url = self._config.find({'key': 'config.baidu.url'})['value']
+            req = urllib2.urlopen(url=baidu_url, data=url)
+            req.read()
         self.finish({"status": "ok", "redirect": "/manage/post.html"})
 
 
