@@ -6,5 +6,5 @@ db.config.insert({'key':'info.introduce', 'value':'&nbsp;&nbsp;这是一个奋�
 db.config.insert({'key':'config.baidu.url', 'value':'http://data.zz.baidu.com/urls?site=www.0x12345.com&token=j4LHAhXmOzbwVjSB'})
 db.config.insert({'key':'email.smtp.server', 'value':'smtp.ym.163.com'});
 db.config.insert({'key':'email.username', 'value':'public@0x12345.com'});
-db.config.insert({'key':'email.password', 'value':'zhwkdj0283'});
+db.config.insert({'key':'email.password', 'value':'....'});
 db.config.insert({'key':'post.comment.flag', 'value':'0'});
