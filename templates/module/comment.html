@@ -15,7 +15,7 @@
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-envelope"></i>
             </span>
-            <input class="form-control" name="email" type="text" placeholder="请输入邮箱">
+            <input class="form-control" name="phone" type="text" placeholder="请输入手机号码">
         </div>
         <div class="form-group">
             <textarea class="form-control" form="comment" name="content" rows="3" placeholder="请输入要评论的内容"></textarea>
@@ -87,7 +87,7 @@
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-envelope"></i>
             </span>
-            <input class="form-control" name="email" type="text" placeholder="请输入邮箱">
+            <input class="form-control" name="phone" type="text" placeholder="请输入手机号码">
         </div>
         <div class="form-group">
             <textarea class="form-control" rows="3" name="content" form="subCommentForm" placeholder="请输入要评论的内容"></textarea>
@@ -96,6 +96,26 @@
         <button type="button" class="btn btn-primary" onclick="cancelComment()" style="margin-left: 10px;">Cancel</button>
     </form>
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" >
+     <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-body" style="padding-bottom: 0;">
+    <form class="form-inline" role="form">
+       <div class="form-group" style="margin-bottom: 20px;">
+       <label class="form-label" id="smsValidatorLabel">请输入短信验证码</label>
+       <input type="text" name="smsValidator" class="form-control" placeholder="请输入短信验证码">
+        <span style="color: red; display: none;" id="validateMsg">验证码错误，请重新输入</span>
+       </div>
+    <div class="modal-footer" style="padding-bottom: 0;">
+       <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+       <button type="button" class="btn btn-primary" onclick="submitSmsValidator()" id="submitSms"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>确认</button>
+    </div>
+    </form>
+      </div>
+      </div>
+     </div>
+     </div>
 
 <script type="text/javascript">
 var v_article_id, v_parent_id, v_comment_id;
@@ -113,8 +133,8 @@ function cancelComment()
     $("#subComment").css("display", "none");
 }
 
-function isEmail(strEmail) {
-    return strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+(([.-])[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) !== -1;
+function isPhone(strPhone) {
+    return strPhone.search(/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/) !== -1;
 }
 
 function isNull(param)
@@ -122,7 +142,7 @@ function isNull(param)
     return param == null || param == undefined || param.length ==0;
 }
 
-function validateForm(user, email, content)
+function validateForm(user, phone, content)
 {
     if(isNull(user))
     {
@@ -130,14 +150,14 @@ function validateForm(user, email, content)
         return false;
     }
 
-    if(isNull(email))
+    if(isNull(phone))
     {
-        alert("邮箱不能为空");
+        alert("手机号码不能为空");
         return false;
     }
-    if(!isEmail(email))
+    if(!isPhone(phone))
     {
-        alert("邮箱格式不合法");
+        alert("手机号码格式不合法");
         return false;
     }
     if(isNull(content))
@@ -149,26 +169,34 @@ function validateForm(user, email, content)
     return true;
 }
 
+var preCommitId;
 function submitComment()
 {
     var user = $("#comment").find("input[name='user']").val();
-    var email = $("#comment").find("input[name='email']").val();
+    var phone = $("#comment").find("input[name='phone']").val();
     var content = $("#comment").find("textarea[name='content']").val();
-    if(!validateForm(user, email, content))
+    if(!validateForm(user, phone, content))
     {
         return false;
     }
 
-    $("#comment").submit();
+    $.post("/comment.html", $("#comment").serialize(), function (data) {
+        var obj = JSON.parse(data);
+        if (obj.ret === "0")
+        {
+            showMsgValidateBox(obj.id);
+        }
+    });
+
     return true;
 }
 
 function submitSubComment()
 {
     var user = $("#subCommentForm").find("input[name='user']").val();
-    var email = $("#subCommentForm").find("input[name='email']").val();
+    var phone = $("#subCommentForm").find("input[name='phone']").val();
     var content = $("#subCommentForm").find("textarea[name='content']").val();
-    if(!validateForm(user, email, content))
+    if(!validateForm(user, phone, content))
     {
         return false;
     }
@@ -176,7 +204,39 @@ function submitSubComment()
     $("#subCommentForm").find("input[name='parent_id']").val(v_parent_id);
     $("#subCommentForm").find("input[name='comment_id']").val(v_comment_id);
 
-    $("#subCommentForm").submit();
+    $.post("/comment.html", $("#subCommentForm").serialize(), function (data) {
+        var obj = JSON.parse(data);
+        if (obj.ret === "0")
+        {
+            showMsgValidateBox(obj.id);
+        }
+    });
     return true;
+}
+
+function showMsgValidateBox(commentId) {
+    preCommitId = commentId;
+    $("#validateMsg").css("display", "none");
+    $("input[name='smsValidator']").val("");
+    $("#myModal").modal();
+    $("#submitSms").prop("disabled", false);
+}
+
+function submitSmsValidator() {
+    var sms = $("input[name='smsValidator']").val();
+    $("#submitSms").prop("disabled", true);
+    $.post("/confirm.html", {commentId: preCommitId, sms: sms}, function (data) {
+        if (data.status !== "ok")
+        {
+            $("#validateMsg").css("display", "inline");
+            $("input[name='smsValidator']").val("");
+            $("#myModal").modal();
+            $("#submitSms").prop("disabled", false);
+        }
+        else
+        {
+            window.location.reload();
+        }
+    });
 }
 </script>

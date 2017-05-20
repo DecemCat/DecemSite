@@ -1,6 +1,10 @@
 __author__ = 'gavin'
 import tornado.web
 import datetime
+import json
+import random
+import string
+from handler.commutil.smsutil import SMSSender
 from bson.objectid import ObjectId
 
 import dao.dbase
@@ -12,7 +16,7 @@ class CommentModule(tornado.web.UIModule):
         self._comment = dao.dbase.BaseDBSupport().db["comment"]
 
     def render(self, article_id):
-        dbcomments = self._comment.find({"article_id": str(article_id)})
+        dbcomments = self._comment.find({"article_id": str(article_id), "status": "1"})
         comments = []
         for dbcomment in dbcomments:
             comments.append(dbcomment)
@@ -42,13 +46,14 @@ class CommentHandler(tornado.web.RequestHandler):
     def __init__(self, application, request, **kwargs):
         super(CommentHandler, self).__init__(application, request, **kwargs)
         self._comment = dao.dbase.BaseDBSupport().db["comment"]
+        self._sender = SMSSender()
 
     def post(self, *args, **kwargs):
         article_id = self.get_body_argument("article_id")
         user = self.get_body_argument("user")
-        email = self.get_body_argument("email")
+        phone = self.get_body_argument("phone")
         content = self.get_body_argument("content")
-        if not article_id or not user or not email or not content:
+        if not article_id or not user or not phone or not content:
             return
 
         parent_id = None
@@ -63,7 +68,10 @@ class CommentHandler(tornado.web.RequestHandler):
         except tornado.web.MissingArgumentError:
             comment_id = None
 
-        comment = {"article_id": article_id, "user": user, "email": email, "content": content, "isauthor": "0", "time": datetime.datetime.now()}
+        chars = string.digits
+        valid = ''.join([random.choice(chars) for i in range(6)])
+        self._sender.sendSMS(valid, phone)
+        comment = {"article_id": article_id, "user": user, "phone": phone, "content": content, "isauthor": "0", "time": datetime.datetime.now(), "status": "0", "code": valid, "times": 0}
         if parent_id is not None:
             comment["parent_id"] = parent_id
 
@@ -71,4 +79,31 @@ class CommentHandler(tornado.web.RequestHandler):
             comment["comment_id"] = comment_id
 
         self._comment.insert(comment)
-        self.redirect("/post/" + article_id + ".html")
+        result = {"ret": "0"}
+        result["id"] = str(comment["_id"])
+        self.finish(json.dumps(result))
+
+class CommentConfirmHandler(tornado.web.RequestHandler):
+    def __init__(self, application, request, **kwargs):
+        super(CommentConfirmHandler, self).__init__(application, request, **kwargs)
+        self._comment = dao.dbase.BaseDBSupport().db["comment"]
+
+    def post(self, *args, **kwargs):
+        sms = self.get_body_argument("sms")
+        comment_id = self.get_body_argument("commentId")
+        cm = self._comment.find_one({"_id": ObjectId(comment_id), "status": "0"})
+        if not cm:
+            self.finish({"status": "ok"})
+            return
+        if cm["code"] == sms:
+            self._comment.update_one({"_id": ObjectId(comment_id)}, {"$set": {"status": "1", "code": ""}})
+            self.finish({"status": "ok"})
+            return
+
+        if cm["times"] > 1:
+            self._comment.update_one({"_id": ObjectId(comment_id)}, {"$set": {"status": "2", "code": ""}})
+            self.finish({"status": "ok"})
+            return
+        self._comment.update_one({"_id": ObjectId(comment_id)}, {"$set": {"times": cm["times"] + 1}})
+
+        self.finish({"status":"fail"})
