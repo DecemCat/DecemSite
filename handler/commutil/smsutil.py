@@ -5,10 +5,8 @@ import urllib, urllib2, sys
 class SMSSender:
     def __init__(self):
         self._comment = dao.dbase.BaseDBSupport().db["config"]
-        self.account = self._comment.find_one({'key': 'sms.account'})["value"]
         self.token = self._comment.find_one({'key': 'sms.code'})["value"]
         self.url = self._comment.find_one({'key': 'sms.url'})["value"]
-        self.appid = self._comment.find_one({'key': 'sms.appid'})["value"]
         self._smsrecord = dao.dbase.BaseDBSupport().db['smsrecord']
 
 
