@@ -5,18 +5,28 @@
     <h4>Leave a Comment:</h4>
     <form role="form" action="/comment.html" method="post" id="comment">
         <input type="hidden" name="article_id" value="{{ article_id }}">
-        <div class="input-group" style="margin-bottom: 5px;">
+        {% if guest is not None%}
+            <div class="input-group" style="margin-bottom: 5px;">
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-user"></i>
             </span>
-            <input class="form-control" name="user" type="text" placeholder="请输入用户名">
-        </div>
-        <div class="input-group" style="margin-bottom: 5px;">
+                <input class="form-control" name="user" type="text" readonly value="{{ guest }}" placeholder="请输入用户名">
+                <input class="form-control" name="phone" type="hidden" value="{{ phone }}" placeholder="请输入手机号码">
+            </div>
+        {% else %}
+            <div class="input-group" style="margin-bottom: 5px;">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-user"></i>
+            </span>
+                <input class="form-control" name="user" type="text" placeholder="请输入用户名">
+            </div>
+            <div class="input-group" style="margin-bottom: 5px;">
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-envelope"></i>
             </span>
-            <input class="form-control" name="phone" type="text" placeholder="请输入手机号码">
-        </div>
+                <input class="form-control" name="phone" type="text" placeholder="请输入手机号码">
+            </div>
+        {% end %}
         <div class="form-group">
             <textarea class="form-control" form="comment" name="content" rows="3" placeholder="请输入要评论的内容"></textarea>
         </div>
@@ -77,18 +87,28 @@
         <input type="hidden" name="comment_id">
         <input type="hidden" name="article_id">
         <input type="hidden" name="parent_id">
-        <div class="input-group" style="margin-bottom: 5px;">
+        {% if guest is not None%}
+            <div class="input-group" style="margin-bottom: 5px;">
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-user"></i>
             </span>
-            <input class="form-control" name="user" type="text" placeholder="请输入用户名">
-        </div>
-        <div class="input-group" style="margin-bottom: 5px;">
+                <input class="form-control" name="user" type="text" readonly value="{{ guest }}" placeholder="请输入用户名">
+                <input class="form-control" name="phone" type="hidden" value="{{ phone }}" placeholder="请输入手机号码">
+            </div>
+        {% else %}
+            <div class="input-group" style="margin-bottom: 5px;">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-user"></i>
+            </span>
+                <input class="form-control" name="user" type="text" placeholder="请输入用户名">
+            </div>
+            <div class="input-group" style="margin-bottom: 5px;">
             <span class="input-group-addon">
                 <i class="glyphicon glyphicon-envelope"></i>
             </span>
-            <input class="form-control" name="phone" type="text" placeholder="请输入手机号码">
-        </div>
+                <input class="form-control" name="phone" type="text" placeholder="请输入手机号码">
+            </div>
+        {% end %}
         <div class="form-group">
             <textarea class="form-control" rows="3" name="content" form="subCommentForm" placeholder="请输入要评论的内容"></textarea>
         </div>
@@ -186,6 +206,10 @@ function submitComment()
         {
             showMsgValidateBox(obj.id);
         }
+        else if(obj.ret === "1")
+        {
+            window.location.reload();
+        }
     });
 
     return true;
@@ -209,6 +233,10 @@ function submitSubComment()
         if (obj.ret === "0")
         {
             showMsgValidateBox(obj.id);
+        }
+        else if(obj.ret === "1")
+        {
+            window.location.reload();
         }
     });
     return true;
