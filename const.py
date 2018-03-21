@@ -7,30 +7,29 @@ class _const:
         self.__dict__[name] = value
 
 
-_const.HANDLER_CONF = "handler.conf"
-_const.MODULE_CONF = "module.conf"
-_const.SERVER_CONF = "server.conf"
+const = _const()
 
-_const.HANDLER_SECTION = "handlers"
-_const.SERVER_SECTION = "server"
-_const.UIMODULE_SECTION = "uimodules"
-_const.DBS_SECTION = "db"
+const.HANDLER_CONF = "handler.conf"
+const.MODULE_CONF = "module.conf"
+const.SERVER_CONF = "server.conf"
 
-_const.SERVER_IP = "ip"
-_const.SERVER_PORT = "port"
+const.HANDLER_SECTION = "handlers"
+const.SERVER_SECTION = "server"
+const.UIMODULE_SECTION = "uimodules"
+const.DBS_SECTION = "db"
 
-_const.DBIP = "dbip"
-_const.DBPORT = "dbport"
-_const.DBNAME = "dbname"
-_const.DBUSER = "dbuser"
-_const.DBPASS = "dbpass"
+const.SERVER_IP = "ip"
+const.SERVER_PORT = "port"
+
+const.DBIP = "dbip"
+const.DBPORT = "dbport"
+const.DBNAME = "dbname"
+const.DBUSER = "dbuser"
+const.DBPASS = "dbpass"
 
 
-_const.INIT_STATIC = {"title":"", "content": "", "time": ""}
-_const.INIT_POST = {"_id": "","title": "", "content":"", "time": "", "tags": [], "brief":""}
-_const.INIT_TIMELINE = {"_id": "","headline": "", "text":"", "startDate": "", "endDate": "", "asset":{"media":"", "credit":"", "caption": ""}}
+const.INIT_STATIC = {"title":"", "content": "", "time": ""}
+const.INIT_POST = {"_id": "","title": "", "content":"", "time": "", "tags": [], "brief":""}
+const.INIT_TIMELINE = {"_id": "","headline": "", "text":"", "startDate": "", "endDate": "", "asset":{"media":"", "credit":"", "caption": ""}}
 
-_const.PAGE_SIZE = 5
-import sys
-
-sys.modules[__name__] = _const()
+const.PAGE_SIZE = 5

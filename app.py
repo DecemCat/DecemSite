@@ -1,14 +1,13 @@
-import os
-import os.path
-import tornado.web
-import tornado.ioloop
-import tornado.httpserver
-import tornado.options
-import const
 import importlib
-import logging
 import logging.config
+import os.path
 
+import tornado.httpserver
+import tornado.ioloop
+import tornado.options
+import tornado.web
+
+from const import const
 from config import ConfigReader
 
 

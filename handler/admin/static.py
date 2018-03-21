@@ -1,10 +1,11 @@
 __author__ = 'gavin'
-import tornado.web
 import datetime
 
-import const
-import dao.dbase
+import tornado.web
+
 import base
+import dao.dbase
+from const import const
 
 
 class AboutMgrHandler(base.BaseHandler):

@@ -1,9 +1,10 @@
 import tornado.web
 from bson.objectid import ObjectId
 
-import const
-import dao.dbase
 import base
+import dao.dbase
+from const import const
+
 
 class TimelineHandler(base.BaseHandler):
     def __init__(self, application, request, **kwargs):

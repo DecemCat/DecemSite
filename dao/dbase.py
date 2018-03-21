@@ -1,7 +1,7 @@
 import pymongo
-import const
 import threading
 
+from const import const
 from config import ConfigReader
 Lock = threading.Lock()
 

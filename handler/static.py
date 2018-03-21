@@ -1,7 +1,8 @@
 __author__ = 'gavin'
 import tornado.web
 import dao.dbase
-import const
+
+from const import const
 
 
 class AboutHandler(tornado.web.RequestHandler):

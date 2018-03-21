@@ -1,12 +1,20 @@
 # coding=utf-8
+import urllib
+import urllib2
+
 import dao.dbase
-import urllib, urllib2, sys
+from encrypt import AESUtil
+
 
 class SMSSender:
     def __init__(self):
-        self._comment = dao.dbase.BaseDBSupport().db["config"]
-        self.token = self._comment.find_one({'key': 'sms.code'})["value"]
-        self.url = self._comment.find_one({'key': 'sms.url'})["value"]
+        self._config = dao.dbase.BaseDBSupport().db["config"]
+        sms_code = self._config.find_one({'key': 'sms.code'})["value"]
+        key = self._config.find_one({"key": "security.key"})["value"]
+        iv = self._config.find_one({"key": "security.iv"})["value"]
+
+        self.token = AESUtil.decrypt(key, sms_code, iv)
+        self.url = self._config.find_one({'key': 'sms.url'})["value"]
         self._smsrecord = dao.dbase.BaseDBSupport().db['smsrecord']
 
 

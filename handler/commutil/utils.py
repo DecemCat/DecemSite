@@ -1,8 +1,11 @@
 __author__ = 'Administrator'
 import smtplib
-import dao.dbase
 import traceback
 from email.mime.text import MIMEText
+
+import dao.dbase
+from encrypt import AESUtil
+
 
 class EmailUtils:
     @staticmethod
@@ -11,6 +14,10 @@ class EmailUtils:
         mail_host = _config.find_one({"key": "email.smtp.server"})["value"]
         mail_user = _config.find_one({"key": "email.username"})["value"]
         mail_pass = _config.find_one({"key": "email.password"})["value"]
+        key = _config.find_one({"key": "security.key"})["value"]
+        iv = _config.find_one({"key": "security.iv"})["value"]
+        mail_pass = AESUtil.decrypt(key, mail_pass, iv)
+
         me="0x12345"+"<"+mail_user+">"
         msg = MIMEText(content,_subtype='plain',_charset='gb2312')
         msg['Subject'] = sub

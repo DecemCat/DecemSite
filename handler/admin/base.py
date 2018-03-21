@@ -1,6 +1,8 @@
-import tornado.web
-import dao.dbase
 import hashlib
+
+import tornado.web
+
+import dao.dbase
 
 
 class BaseHandler(tornado.web.RequestHandler):

@@ -6,10 +6,10 @@ class AESUtil():
     @staticmethod
     def encrypt(key, text, iv):
         key_len = len(key)
-        if key_len > 24:
-            key = key[0:23]
-        elif key_len < 24:
-            key = key + ''.join([' ' for i in range(24 - key_len)])
+        if key_len > 32:
+            key = key[0:31]
+        elif key_len < 32:
+            key = key + ''.join([' ' for i in range(32 - key_len)])
 
 
         iv_len = len(iv)
@@ -33,10 +33,10 @@ class AESUtil():
     @staticmethod
     def decrypt(key, text, iv):
         key_len = len(key)
-        if key_len > 24:
-            key = key[0:23]
-        elif len(key) < 24:
-            key = key + ''.join([' ' for i in range(24 - key_len)])
+        if key_len > 32:
+            key = key[0:31]
+        elif len(key) < 32:
+            key = key + ''.join([' ' for i in range(32 - key_len)])
 
         iv_len = len(iv)
         if iv_len > 16:

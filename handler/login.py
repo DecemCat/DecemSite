@@ -1,11 +1,12 @@
-import tornado.web
-import string
-import random
-import dao.dbase
 import datetime
 import hashlib
+import random
+import string
 
-import commutil.utils
+import tornado.web
+import dao.dbase
+
+from handler.commutil.utils import EmailUtils
 
 
 class LoginHandler(tornado.web.RequestHandler):
@@ -31,9 +32,17 @@ class LoginHandler(tornado.web.RequestHandler):
             return
 
         db_passwd = user["passwd"]
+        if not db_passwd:
+            self.render("admin/login.html")
+            return
+
+        passwd = hashlib.sha256(passwd).hexdigest()
         if passwd != db_passwd:
             self.render("admin/login.html")
             return
+
+        user["passwd"] = None
+        self._user.update({"email": email}, {"$set": {"update": datetime.datetime.now(), "passwd": None}})
 
         self.set_secure_cookie("user", email)
         ran = ''.join([random.choice(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']) for i in range(16)])
@@ -70,8 +79,9 @@ class PasswordHandler(tornado.web.RequestHandler):
         email_count = self._user.find({"email": email}).count()
         if email_count == 0:
             return
-        password = self._gen_password(10)
-        #commutil.utils.EmailUtils.send_mail([email], "Your password this time!", password)
+        password = self._gen_password(20)
+        EmailUtils.send_mail([email], "Your password this time!", password)
+        password = hashlib.sha256(password).hexdigest()
 
         self._user.update({"email": email}, {"$set": {"update": datetime.datetime.now(), "passwd": password}})
         self.finish({"status": "ok"})

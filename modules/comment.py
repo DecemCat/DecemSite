@@ -1,8 +1,6 @@
 __author__ = 'gavin'
 import datetime
 import json
-import random
-import string
 
 import tornado.web
 from bson.objectid import ObjectId

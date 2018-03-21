@@ -15,22 +15,15 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
       <script type="text/javascript">
-          var isSend = false;
           function isEmail(strEmail) {
               return strEmail.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+(([.-])[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) !== -1;
           }
 
           function getPwd() {
-              if (isSend)
-              {
-                  return;
-              }
-
               var email = $("#accEmail").val() || '';
               if(isEmail(email))
               {
                   $.post('/password', {email: email});
-                  isSend = true;
               }
 
           }
@@ -58,8 +51,11 @@
 			            <div class="content-wrap">
 			                <h6>Sign In</h6>
                             <form method="post" action="login.html">
-                                <input class="form-control" type="text" name="user" id="accEmail" placeholder="E-mail address" onblur="getPwd()">
-                                <input class="form-control" type="password" name="passwd" placeholder="Password">
+								<div class="input-group">
+									<input class="form-control" type="text" style="margin-bottom: 0px;" name="user" id="accEmail" placeholder="E-mail address" >
+									<span class="input-group-addon" style="cursor: pointer;" onclick="getPwd()">Get Pwd</span>
+								</div>
+								<input class="form-control" type="password" style="margin-top: 10px;" name="passwd" placeholder="Password">
                                 <div class="action">
                                     <button type="submit" class="btn btn-primary signup">Login</button>
                                 </div>

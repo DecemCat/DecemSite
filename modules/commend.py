@@ -1,7 +1,8 @@
 __author__ = 'gavin'
-import tornado.web
-import dao.dbase
 import pymongo
+import tornado.web
+
+import dao.dbase
 
 
 class CommendModule(tornado.web.UIModule):
