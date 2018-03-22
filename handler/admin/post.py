@@ -4,11 +4,14 @@ import urllib2
 
 import pymongo
 import tornado.web
+import logging
 from bson.objectid import ObjectId
 
 import base
 import dao.dbase
 from const import const
+
+log = logging.getLogger("operation")
 
 
 class NewBlogHandler(base.BaseHandler):
@@ -43,6 +46,7 @@ class NewBlogHandler(base.BaseHandler):
         body = self.request.body
         data = json.loads(body)
         article_id = data.pop("_id")
+        log.info("user %s create or updated article_id %s", self.current_user, article_id)
 
         tags = data["tags"]
         for tag in tags:
@@ -84,5 +88,7 @@ class DeleteBlogHandler(base.BaseHandler):
     @tornado.web.authenticated
     def get(self, *args, **kwargs):
         if self.request.arguments.has_key("article_id"):
-            self._posts.delete_one({"_id": ObjectId(self.get_argument("article_id"))})
+            article_id = self.get_argument("article_id")
+            log.info("user %s delete article_id %s", self.current_user(), article_id)
+            self._posts.delete_one({"_id": ObjectId(article_id)})
         self.redirect("/manage/post.html")

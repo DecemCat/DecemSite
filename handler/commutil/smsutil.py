@@ -3,7 +3,10 @@ import urllib
 import urllib2
 
 import dao.dbase
+import logging
 from encrypt import AESUtil
+
+log = logging.getLogger("run")
 
 
 class SMSSender:
@@ -18,7 +21,7 @@ class SMSSender:
         self._smsrecord = dao.dbase.BaseDBSupport().db['smsrecord']
 
 
-    def sendSMS(self, code, receiver):
+    def send_sms(self, code, receiver):
         host = self.url
         path = '/singleSendSms'
         method = 'GET'
@@ -30,6 +33,7 @@ class SMSSender:
         request.add_header('Authorization', 'APPCODE ' + appcode)
         response = urllib2.urlopen(request)
         content = response.read()
+        log.info("send sms to %s response %s", receiver, content)
         if (content):
             self._smsrecord.insert_one({'code': code, 'receiver': receiver, 'result': content})
 

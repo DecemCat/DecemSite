@@ -1,11 +1,14 @@
 __author__ = 'gavin'
 import datetime
+import logging
 
 import tornado.web
 
 import base
 import dao.dbase
 from const import const
+
+log = logging.getLogger("operation")
 
 
 class AboutMgrHandler(base.BaseHandler):
@@ -30,6 +33,7 @@ class AboutMgrHandler(base.BaseHandler):
         if not title or not content:
             self.finish({"status": "fail"})
 
+        log.info("user %s updated the about pages", self.current_user)
         time = datetime.datetime.now()
         self._static.update({"type": "about"}, {"$set": {"title": title, "content": content, "time": time, "type": "about"}}, upsert=True)
         self._config.update({"key": "info.introduce"}, {"$set": {"value": introduce}})
@@ -58,5 +62,6 @@ class LifeMgrHandler(base.BaseHandler):
         title = titles[0]
         content = contents[0]
         time = datetime.datetime.now()
+        log.info("user %s updated the life pages", self.current_user)
         self._static.update({"type": "life"}, {"$set": {"title": title, "content": content, "time": time, "type": "life"}}, upsert=True)
         self.finish({"status": "ok", "redirect": "/life.html"})

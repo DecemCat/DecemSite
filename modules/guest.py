@@ -39,7 +39,7 @@ class Guest:
         code = ''.join([random.choice(chars) for i in range(6)])
         passwd = ''.join([random.choice(string.digits) for i in range(24)])
         pre_guest = self._guest.find_one({'phone': self._phone})
-        self._sender.sendSMS(code, self._phone)
+        self._sender.send_sms(code, self._phone)
         if pre_guest:
             self._guest.update_one({'phone': self._phone}, {'$set': {'name': name, 'ip': ip, 'status': '0', 'passwd': passwd, 'code': code, 'chance': 0}})
             return pre_guest

@@ -5,7 +5,6 @@ import tornado.escape
 import tornado.web
 
 import dao.dbase
-import list
 
 comment_lock = threading.RLock()
 from bson import ObjectId

@@ -2,14 +2,18 @@ __author__ = 'Administrator'
 import smtplib
 import traceback
 from email.mime.text import MIMEText
+import logging
 
 import dao.dbase
 from encrypt import AESUtil
+
+log = logging.getLogger("run")
 
 
 class EmailUtils:
     @staticmethod
     def send_mail(to_list,sub,content):
+        log.info("start send email %s to %s", sub, to_list)
         _config = dao.dbase.BaseDBSupport().db["config"]
         mail_host = _config.find_one({"key": "email.smtp.server"})["value"]
         mail_user = _config.find_one({"key": "email.username"})["value"]
@@ -30,6 +34,7 @@ class EmailUtils:
             server.sendmail(me, to_list, msg.as_string())
             server.close()
             return True
-        except:
+        except Exception,e:
+            log.error("send email to %s failed, exception: %s", to_list, e.message)
             traceback.print_exc()
             return False
