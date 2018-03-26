@@ -28,7 +28,7 @@ class EmailUtils:
         msg['From'] = me
         msg['To'] = ";".join(to_list)
         try:
-            server = smtplib.SMTP()
+            server = smtplib.SMTP_SSL()
             server.connect(mail_host)
             server.login(mail_user,mail_pass)
             server.sendmail(me, to_list, msg.as_string())
