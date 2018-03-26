@@ -89,6 +89,6 @@ class DeleteBlogHandler(base.BaseHandler):
     def get(self, *args, **kwargs):
         if self.request.arguments.has_key("article_id"):
             article_id = self.get_argument("article_id")
-            log.info("user %s delete article_id %s", self.current_user(), article_id)
+            log.info("user %s delete article_id %s", self.current_user, article_id)
             self._posts.delete_one({"_id": ObjectId(article_id)})
         self.redirect("/manage/post.html")
