@@ -224,7 +224,7 @@ class Uploader:
         filename = re.sub(r'^/', '', self.fullName)
         return {
             'state': self.stateInfo,
-            'url': os.path.join('http://127.0.0.1:8800','static',filename),
+            'url': os.path.join('http://0x12345.com','static',filename),
             'title': self.oriName,
             'original': self.oriName,
             'type': self.fileType,
